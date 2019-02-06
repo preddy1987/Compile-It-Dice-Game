@@ -38,6 +38,7 @@ namespace CompileItCLI
             };
 
             // Setup player colors
+          
 
             _game.Start(players);
 
@@ -84,7 +85,7 @@ namespace CompileItCLI
                         Console.WriteLine("2) End Turn");
                         Console.WriteLine("3) Suicide");
                         // Score Board
-                        
+
                         Console.WriteLine("Enter Selection....");
 
                         var selection = Console.ReadKey().KeyChar;
@@ -102,7 +103,7 @@ namespace CompileItCLI
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     Console.ReadKey();
@@ -142,14 +143,30 @@ namespace CompileItCLI
             ResetColor();
         }
 
+      
         private void SetColor()
-        {
-            //_game.CurrentPlayerName
-        }
+        { 
+        //_game.CurrentPlayerName
+           
+         }
 
         private void ResetColor()
         {
-
         }
+    
+    
     }
-}
+
+   
+        
+
+        
+    }
+      
+    
+    
+        
+
+       
+    
+
