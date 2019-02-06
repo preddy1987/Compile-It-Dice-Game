@@ -101,10 +101,6 @@ namespace CompileItCLI
             {
             }
             
-                //BinaryFormatter formatter = new BinaryFormatter();
-                //StreamWriter writer = new StreamWriter(_playerFileName);
-                //formatter.Serialize(writer.BaseStream, _players);
-                //writer.Close();
         }
 
 
@@ -133,6 +129,9 @@ namespace CompileItCLI
 
             while (!quit)
             {
+                //display menu method
+                // query user for their choice
+                // choices are add player, remove player, list players, remove all players, back to main menu
                 DisplayPlayerMenu();
                 playerChoice = CLIHelper.GetSingleInteger("Select an option...", 1, 5);
                 if (playerChoice == 1)
@@ -215,9 +214,7 @@ namespace CompileItCLI
                     quit = true;
                 }
             }
-            //display menu method
-            // queury user for their choice
-            // choices are add player, remove player, back to main menu
+            
          }
         
         private void DisplayPlayerMenu()
