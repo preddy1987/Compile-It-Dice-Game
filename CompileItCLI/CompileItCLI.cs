@@ -13,23 +13,50 @@ namespace CompileItCLI
         {
             _game = game;
 
-            // Display Splash Screen
+            DisplaySplashScreen();
         }
 
         public void MainMenu()
         {
-            bool gameOver = false;
-            while (!gameOver)
+            bool quitGame = false;
+            while (!quitGame)
             {
+                Console.Clear();
                 Console.WriteLine("1) Player Management");
                 Console.WriteLine("2) Leader Board");
                 Console.WriteLine("3) Start Game");
-                Console.WriteLine("4) Quit");
-                // Player Management
-                // Leader Board
-                // Start Game (Turn Menu)
-                // Change Font
+                Console.WriteLine("4) Change Font");
+                Console.WriteLine("5) Quit");
+                Console.WriteLine();
+
+                int selection = CLIHelper.GetSingleInteger("Select an option...", 1, 5);
+
+                if(selection == 1)
+                {
+                    PlayerMenu();
+                }
+                else if (selection == 2)
+                {
+                    DisplayLeaderBoard();
+                }
+                else if (selection == 3)
+                {
+                    PlayGame();
+                }
+                else if (selection == 4)
+                {
+                    FontMenu();
+                }
+                else if (selection == 5)
+                {
+                    quitGame = true;
+                }
             }
+        }
+
+        public void DisplaySplashScreen()
+        {
+
         }
 
         public void PlayGame()
@@ -63,6 +90,11 @@ namespace CompileItCLI
 
         }
 
+        private void DisplaySuicideScreen()
+        {
+
+        }
+
         private void TurnMenu()
         {
             bool quit = false;
@@ -86,22 +118,26 @@ namespace CompileItCLI
                         Console.WriteLine();
                         Console.WriteLine("1) Roll");
                         Console.WriteLine("2) End Turn");
-                        Console.WriteLine("3) Suicide");
-                        // Score Board
-                        
-                        Console.WriteLine("Enter Selection....");
+                        Console.WriteLine("3) Score Board");
+                        Console.WriteLine("4) Suicide");
 
-                        var selection = Console.ReadKey().KeyChar;
-                        if (selection == '1')
+                        int selection = CLIHelper.GetSingleInteger("Select an option...", 1, 4);
+
+                        if (selection == 1)
                         {
                             RollDice();
                         }
-                        else if (selection == '2')
+                        else if (selection == 2)
                         {
                             _game.PassTurn();
                         }
-                        else if (selection == '3')
+                        else if (selection == 3)
                         {
+                            DisplayScoreBoard();
+                        }
+                        else if (selection == 4)
+                        {
+                            DisplaySuicideScreen();
                             quit = true;
                         }
                     }
@@ -125,6 +161,11 @@ namespace CompileItCLI
                 Console.ReadKey();
                 _game.PassTurn();
             }
+        }
+
+        private void DisplayScoreBoard()
+        {
+            var status = _game.PlayersStatus;
         }
 
         private void DisplayPlayerStatus()

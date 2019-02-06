@@ -7,6 +7,7 @@ namespace CompileIt
     {
         #region Member Variables
         private List<CompileItPlayer> _players = null;
+        private Random _dieRoller = new Random();
 
         private int _currentPlayerIndex = 0;
         private int _startPlayerIndex = 0;
@@ -120,6 +121,21 @@ namespace CompileIt
                 return CurrentPlayer.IsTurnOver;
             }
         }
+
+        public List<IPlayerStatus> PlayersStatus
+        {
+            get
+            {
+                List<IPlayerStatus> result = new List<IPlayerStatus>();
+
+                foreach (var player in _players)
+                {
+                    result.Add(ObjectCopier.Clone(player));
+                }
+
+                return result;
+            }
+        }
         #endregion
 
         #region Constructors
@@ -176,7 +192,7 @@ namespace CompileIt
         
         public ITurnStatus RollDice()
         {
-            CurrentPlayer.TakeRoll();
+            CurrentPlayer.TakeRoll(_dieRoller);
             return CurrentPlayer;
         }
 
