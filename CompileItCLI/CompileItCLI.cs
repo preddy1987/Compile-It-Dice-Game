@@ -317,7 +317,7 @@ namespace CompileItCLI
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write($"Yellow: {yellowCounter}");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write($"Redy: {redCounter}");
+            Console.Write($"Red: {redCounter}");
 
             ResetColor();
         }
