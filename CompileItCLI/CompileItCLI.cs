@@ -9,6 +9,11 @@ namespace CompileItCLI
     {
         private ICompileItGame _game = null;
 
+        private List<string> _players = new List<string>();
+            
+               
+           
+
         public CompileItCLI(ICompileItGame game)
         {
             _game = game;
@@ -22,6 +27,8 @@ namespace CompileItCLI
             while (!gameOver)
             {
                 // Player Management
+
+
                 // Leader Board
                 // Start Game (Turn Menu)
                 // Change Font
@@ -30,16 +37,11 @@ namespace CompileItCLI
 
         public void PlayGame()
         {
-            List<string> players = new List<string>()
-            {
-                "Chris",
-                "Adam",
-                "William"
-            };
+            
 
             // Setup player colors
 
-            _game.Start(players);
+            _game.Start(_players);
 
             TurnMenu();
         }
@@ -51,7 +53,92 @@ namespace CompileItCLI
 
         private void PlayerMenu()
         {
+            // loop for valid input
+            bool validChoice = false;
+            int playerChoice = 0;
+            bool quit = false;
 
+            while (!validChoice || quit)
+            {
+                DisplayPlayerMenu();
+                playerChoice = PlayerMenuChoice();
+                
+                ProcessMenuChoice(playerChoice);
+            }
+
+            
+                
+            //display menu method
+            // queury user for their choice
+            // choices are add player, remove player, back to main menu
+
+
+        }
+
+        private void ProcessMenuChoice(int playerChoice)
+        {
+            if(playerChoice == 1)
+            {
+                string playerName = "";
+                bool nameAdded = false;
+                while (!nameAdded)
+                {
+                    nameAdded = true;
+                    Console.WriteLine("Enter Name");
+                    playerName = Console.ReadLine();
+                    foreach (string name in _players)
+                    {
+                        if (name == playerName)
+                        {
+                            Console.WriteLine("Name is already taken, choose another.");
+                            nameAdded = false;
+                        }
+                    }
+                }
+                //we have A UNIQUE NAME.
+                _players.Add(playerName)
+                    
+
+            }
+            else if(playerChoice == 2)
+            {
+
+            }
+            else if(playerChoice == 3)
+            {
+
+            }
+
+
+        }
+        private int PlayerMenuChoice()
+        {
+            string userInput = Console.ReadLine();
+            int playerChoice = 0;
+            int result = 0;
+            try
+            {
+                playerChoice = int.Parse(userInput);
+                if(playerChoice >=1 || playerChoice <= 3)
+                {
+                    result = playerChoice;
+                }
+
+
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine("Please enter 1, 2, or 3.  Hit any key to continue.");
+            }
+            return result;
+        }
+
+        private void DisplayPlayerMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("1.) Add Player");
+            Console.WriteLine("2.) Remove Player");
+            Console.WriteLine("3.) Back To Main Menu");
         }
 
         private void DisplayLeaderBoard()
