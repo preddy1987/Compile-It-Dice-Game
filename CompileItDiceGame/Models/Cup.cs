@@ -4,11 +4,11 @@ using System.Text;
 
 namespace CompileIt
 {
+    [Serializable]
     public class Cup
     {
         private List<Die> _dice = new List<Die>();
-        private Random _rnd = new Random();
-
+        
         public bool HasDice
         {
             get
@@ -62,10 +62,10 @@ namespace CompileIt
             }
         }
 
-        public Die PullDie()
+        public Die PullDie(Random rnd)
         {
             Die result = null;
-            int index = _rnd.Next(0, _dice.Count);
+            int index = rnd.Next(0, _dice.Count);
             result = _dice[index];
             _dice.RemoveAt(index);
             return result;
