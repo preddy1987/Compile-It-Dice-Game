@@ -31,7 +31,7 @@ namespace CompileItCLI
 
                 int selection = CLIHelper.GetSingleInteger("Select an option...", 1, 5);
 
-                if(selection == 1)
+                if (selection == 1)
                 {
                     PlayerMenu();
                 }
@@ -107,6 +107,7 @@ namespace CompileItCLI
                     if (_game.HasWinner)
                     {
                         // Log winner data to file
+                        _game.SaveWinner(_game.CurrentPlayerName);
                         Console.Clear();
                         Console.WriteLine("The winner is " + _game.CurrentPlayerName);
                         Console.ReadKey();
