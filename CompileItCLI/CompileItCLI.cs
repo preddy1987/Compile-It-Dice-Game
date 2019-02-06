@@ -60,7 +60,7 @@ namespace CompileItCLI
 
         private void DisplayLeaderBoard()
         {
-
+            
         }
 
         private void TurnMenu()
@@ -74,7 +74,6 @@ namespace CompileItCLI
 
                     if (_game.HasWinner)
                     {
-                        // Log winner data to file
                         Console.Clear();
                         Console.WriteLine("The winner is " + _game.CurrentPlayerName);
                         Console.ReadKey();
