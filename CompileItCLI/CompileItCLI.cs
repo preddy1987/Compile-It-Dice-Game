@@ -143,6 +143,29 @@ namespace CompileItCLI
             Console.WriteLine($"Odds: {status.Odds.ToString("N2")}");
             // Add information about dice in cup
 
+            //return total amount of die remaining in the cup
+            Console.WriteLine($"Remaining Dice: {status.RemainingDice.Count}");
+            //color of the remaining die in the cup and quantity
+            int greenCounter = 0;
+            int redCounter = 0;
+            int yellowCounter = 0;
+            foreach (var die in status.RemainingDice)
+            {              
+                if (die.Type == DieType.Green)
+                {
+                    greenCounter += 1;
+                }
+                else if (die.Type == DieType.Red)
+                {
+                    redCounter += 1;
+                }
+                else if (die.Type == DieType.Yellow)
+                {
+                    yellowCounter += 1;
+                }
+            }            
+            Console.WriteLine($"Green: {greenCounter}  Yellow: {yellowCounter}  Red: {redCounter}");
+
             ResetColor();
         }
 
