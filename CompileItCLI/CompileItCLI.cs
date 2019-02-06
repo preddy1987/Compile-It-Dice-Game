@@ -211,7 +211,6 @@ namespace CompileItCLI
                     quit = true;
                 }
             }
-            
          }
         
         private void DisplayPlayerMenu()
@@ -226,7 +225,7 @@ namespace CompileItCLI
 
         private void DisplayLeaderBoard()
         {
-            
+
         }
 
         private void DisplaySuicideScreen()
@@ -315,6 +314,8 @@ namespace CompileItCLI
             Console.WriteLine("SCORE BOARD");
             Console.WriteLine();
 
+            Utility.PlaySound("LOZ_Fanfare.wav");
+
             try
             {
                 for (int i = 0; i < status.Count; i++)
@@ -323,11 +324,15 @@ namespace CompileItCLI
 
                     if (!(listedPlayer.Name).Equals(_game.CurrentPlayerName))
                     {
-                        Console.WriteLine((listedPlayer.Name + " ").PadRight(20, '-') + (status[i].TotalSuccesses).ToString().PadLeft(3) + " Successes");
+                        Console.Write((listedPlayer.Name + " ").PadRight(15, '-'));
+                        Console.Write(((listedPlayer.TotalSuccesses).ToString().PadLeft(3) + " Successes ").PadRight(15, '-'));
+                        Console.WriteLine((listedPlayer.RoundCount).ToString().PadLeft(3) + " Rounds Completed");
                     }
                     else
                     {
-                        Console.WriteLine("You ".PadRight(20, '-') + (status[i].TotalSuccesses).ToString().PadLeft(3) + " Successes");
+                        Console.Write(("You ").PadRight(15, '-'));
+                        Console.Write(((listedPlayer.TotalSuccesses).ToString().PadLeft(3) + " Successes ").PadRight(15, '-'));
+                        Console.WriteLine((listedPlayer.RoundCount).ToString().PadLeft(3) + " Rounds Completed");
                     }
                 }
             }
