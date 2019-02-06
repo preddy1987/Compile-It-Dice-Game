@@ -11,7 +11,7 @@ namespace CompileItCLI
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine(@"                                                   |
+            Console.WriteLine(@"                                                   
                ...                                 |
              ;::::;                                |
            ;::::; :;                               |
