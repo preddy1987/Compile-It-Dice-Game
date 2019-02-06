@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using CompileIt;
 
@@ -15,6 +16,8 @@ namespace CompileItCLI
         {
             _game = game;
 
+            Utility.PlaySound("air_raid.wav");
+
             DisplaySplashScreen();
         }
 
@@ -23,14 +26,6 @@ namespace CompileItCLI
             bool quitGame = false;
             while (!quitGame)
             {
-
-                // Player Management
-
-
-                // Leader Board
-                // Start Game (Turn Menu)
-                // Change Font
-
                 Console.Clear();
                 Console.WriteLine("1) Player Management");
                 Console.WriteLine("2) Leader Board");
@@ -199,6 +194,8 @@ namespace CompileItCLI
 
         private void DisplaySuicideScreen()
         {
+            Utility.PlaySound("taps.wav");
+
             Suicide quitGame = new Suicide();
             quitGame.SuicideScreen();
         }
