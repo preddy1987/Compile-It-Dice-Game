@@ -18,21 +18,59 @@ namespace CompileItCLI
         {
             _game = game;
 
-            // Display Splash Screen
+            DisplaySplashScreen();
         }
 
         public void MainMenu()
         {
-            bool gameOver = false;
-            while (!gameOver)
+            bool quitGame = false;
+            while (!quitGame)
             {
+
                 // Player Management
 
 
                 // Leader Board
                 // Start Game (Turn Menu)
                 // Change Font
+
+                Console.Clear();
+                Console.WriteLine("1) Player Management");
+                Console.WriteLine("2) Leader Board");
+                Console.WriteLine("3) Start Game");
+                Console.WriteLine("4) Change Font");
+                Console.WriteLine("5) Quit");
+                Console.WriteLine();
+
+                int selection = CLIHelper.GetSingleInteger("Select an option...", 1, 5);
+
+                if (selection == 1)
+                {
+                    PlayerMenu();
+                }
+                else if (selection == 2)
+                {
+                    DisplayLeaderBoard();
+                }
+                else if (selection == 3)
+                {
+                    PlayGame();
+                }
+                else if (selection == 4)
+                {
+                    FontMenu();
+                }
+                else if (selection == 5)
+                {
+                    quitGame = true;
+                }
+
             }
+        }
+
+        public void DisplaySplashScreen()
+        {
+
         }
 
         public void PlayGame()
@@ -40,6 +78,7 @@ namespace CompileItCLI
             
 
             // Setup player colors
+          
 
             _game.Start(_players);
 
@@ -96,7 +135,7 @@ namespace CompileItCLI
                     }
                 }
                 //we have A UNIQUE NAME.
-                _players.Add(playerName)
+                _players.Add(playerName);
                     
 
             }
@@ -146,6 +185,11 @@ namespace CompileItCLI
 
         }
 
+        private void DisplaySuicideScreen()
+        {
+
+        }
+
         private void TurnMenu()
         {
             bool quit = false;
@@ -158,6 +202,7 @@ namespace CompileItCLI
                     if (_game.HasWinner)
                     {
                         // Log winner data to file
+                        _game.SaveWinner(_game.CurrentPlayerName);
                         Console.Clear();
                         Console.WriteLine("The winner is " + _game.CurrentPlayerName);
                         Console.ReadKey();
@@ -169,27 +214,31 @@ namespace CompileItCLI
                         Console.WriteLine();
                         Console.WriteLine("1) Roll");
                         Console.WriteLine("2) End Turn");
-                        Console.WriteLine("3) Suicide");
-                        // Score Board
-                        
-                        Console.WriteLine("Enter Selection....");
+                        Console.WriteLine("3) Score Board");
+                        Console.WriteLine("4) Suicide");
 
-                        var selection = Console.ReadKey().KeyChar;
-                        if (selection == '1')
+                        int selection = CLIHelper.GetSingleInteger("Select an option...", 1, 4);
+
+                        if (selection == 1)
                         {
                             RollDice();
                         }
-                        else if (selection == '2')
+                        else if (selection == 2)
                         {
                             _game.PassTurn();
                         }
-                        else if (selection == '3')
+                        else if (selection == 3)
                         {
+                            DisplayScoreBoard();
+                        }
+                        else if (selection == 4)
+                        {
+                            DisplaySuicideScreen();
                             quit = true;
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     Console.ReadKey();
@@ -210,6 +259,11 @@ namespace CompileItCLI
             }
         }
 
+        private void DisplayScoreBoard()
+        {
+            var status = _game.PlayersStatus;
+        }
+
         private void DisplayPlayerStatus()
         {
             // Add colors for different players
@@ -226,17 +280,56 @@ namespace CompileItCLI
             Console.WriteLine($"Odds: {status.Odds.ToString("N2")}");
             // Add information about dice in cup
 
+            //return total amount of die remaining in the cup
+            Console.WriteLine($"Remaining Dice: {status.RemainingDice.Count}");
+            //color of the remaining die in the cup and quantity
+            int greenCounter = 0;
+            int redCounter = 0;
+            int yellowCounter = 0;
+            foreach (var die in status.RemainingDice)
+            {              
+                if (die.Type == DieType.Green)
+                {
+                    greenCounter += 1;
+                }
+                else if (die.Type == DieType.Red)
+                {
+                    redCounter += 1;
+                }
+                else if (die.Type == DieType.Yellow)
+                {
+                    yellowCounter += 1;
+                }
+            }            
+            Console.WriteLine($"Green: {greenCounter}  Yellow: {yellowCounter}  Red: {redCounter}");
+
             ResetColor();
         }
 
+      
         private void SetColor()
-        {
-            //_game.CurrentPlayerName
-        }
+        { 
+        //_game.CurrentPlayerName
+           
+         }
 
         private void ResetColor()
         {
-
         }
+    
+    
     }
-}
+
+   
+        
+
+        
+    }
+      
+    
+    
+        
+
+       
+    
+

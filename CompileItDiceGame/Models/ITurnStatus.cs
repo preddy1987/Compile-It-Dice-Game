@@ -4,13 +4,18 @@ using System.Text;
 
 namespace CompileIt
 {
-    public interface ITurnStatus
+    public interface IPlayerStatus
     {
         int RoundCount { get; }
         int TotalSuccesses { get; }
+    }
+
+    public interface ITurnStatus : IPlayerStatus
+    {
         int TurnErrors { get; }
         int TurnSuccesses { get; }
         int TurnWarnings { get; }
         double Odds { get; }
+        List<Die> RemainingDice { get; }
     }
 }

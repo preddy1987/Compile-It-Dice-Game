@@ -4,6 +4,7 @@ using System.Text;
 
 namespace CompileIt
 {
+    [Serializable]
     public abstract class Player
     {
         public string Name { get; }

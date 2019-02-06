@@ -5,6 +5,7 @@ using System.Text;
 
 namespace CompileIt
 {
+    [Serializable]
     public class CompileItPlayer : Player, ITurnStatus
     {
         private const int NumberDiePerRoll = 3;
@@ -14,8 +15,14 @@ namespace CompileIt
         private bool _turnOver = true;
         private List<Die> _lastWarningsDie = new List<Die>();
         private Cup _cup = new Cup();
-        private Random _dieRoller = new Random();
 
+        public List<Die> RemainingDice
+        {
+            get
+            {
+                return _cup.RemainingDie;
+            }
+        }
         public int RoundCount { get; private set; }
         public int TotalSuccesses { get; private set; }
         public int TurnErrors { get; private set; }
@@ -128,7 +135,7 @@ namespace CompileIt
             _turnOver = false;
         }
 
-        public void TakeRoll()
+        public void TakeRoll(Random dieRoller)
         {
             if (!IsWinner && !IsTurnOver)
             {
@@ -136,7 +143,7 @@ namespace CompileIt
                 List<Die> pulledDice = new List<Die>();
                 for (int i = 0; i < (NumberDiePerRoll - _lastWarningsDie.Count); i++)
                 {
-                    pulledDice.Add(_cup.PullDie());
+                    pulledDice.Add(_cup.PullDie(dieRoller));
                 }
                 foreach (var die in _lastWarningsDie)
                 {
@@ -147,7 +154,7 @@ namespace CompileIt
                 // Roll the dice
                 foreach (var die in pulledDice)
                 {
-                    var side = die.Roll(_dieRoller);
+                    var side = die.Roll(dieRoller);
                     if (side == CompileType.Error)
                     {
                         TurnErrors++;
