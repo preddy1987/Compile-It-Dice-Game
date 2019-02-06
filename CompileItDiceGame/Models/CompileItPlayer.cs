@@ -16,6 +16,13 @@ namespace CompileIt
         private Cup _cup = new Cup();
         private Random _dieRoller = new Random();
 
+        public List<Die> RemainingDice
+        {
+            get
+            {
+                return _cup.RemainingDie;
+            }
+        }
         public int RoundCount { get; private set; }
         public int TotalSuccesses { get; private set; }
         public int TurnErrors { get; private set; }

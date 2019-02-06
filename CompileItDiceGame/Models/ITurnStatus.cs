@@ -12,5 +12,6 @@ namespace CompileIt
         int TurnSuccesses { get; }
         int TurnWarnings { get; }
         double Odds { get; }
+        List<Die> RemainingDice { get; }
     }
 }

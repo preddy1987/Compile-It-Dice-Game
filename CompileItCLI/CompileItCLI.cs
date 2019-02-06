@@ -21,6 +21,10 @@ namespace CompileItCLI
             bool gameOver = false;
             while (!gameOver)
             {
+                Console.WriteLine("1) Player Management");
+                Console.WriteLine("2) Leader Board");
+                Console.WriteLine("3) Start Game");
+                Console.WriteLine("4) Quit");
                 // Player Management
                 // Leader Board
                 // Start Game (Turn Menu)
