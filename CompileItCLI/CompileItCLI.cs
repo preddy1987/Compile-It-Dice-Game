@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using CompileIt;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace CompileItCLI
 {
@@ -10,6 +12,7 @@ namespace CompileItCLI
         private ICompileItGame _game = null;
 
         private List<string> _players = new List<string>();
+        private string _playerFileName= "CompileItPlayerList.dat";
 
         public CompileItCLI(ICompileItGame game)
         {
@@ -21,6 +24,7 @@ namespace CompileItCLI
         public void MainMenu()
         {
             bool quitGame = false;
+            LoadPlayers();  //Load players at startup.
             while (!quitGame)
             {
 
@@ -64,6 +68,45 @@ namespace CompileItCLI
 
             }
         }
+
+        private void LoadPlayers()
+        {
+            //Load players from a file at startup.
+            try
+            {
+                using (Stream stream = File.Open(_playerFileName, FileMode.Open))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+                    _players = (List<string>)bin.Deserialize(stream);
+                }
+            }
+            catch (IOException)
+            {
+                //First time through, we don't have a file.  This is ok.
+            }
+        
+        }
+
+        private void SavePlayers()
+        {
+            try
+            {
+                using (Stream stream = File.Open(_playerFileName, FileMode.Create))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+                    bin.Serialize(stream, _players);
+                }
+            }
+            catch (IOException)
+            {
+            }
+            
+                //BinaryFormatter formatter = new BinaryFormatter();
+                //StreamWriter writer = new StreamWriter(_playerFileName);
+                //formatter.Serialize(writer.BaseStream, _players);
+                //writer.Close();
+        }
+
 
         public void DisplaySplashScreen()
         {
@@ -121,7 +164,7 @@ namespace CompileItCLI
                     }
                     //we have A UNIQUE NAME.
                     _players.Add(playerName);
-
+                    SavePlayers();
 
                 }
                 else if (playerChoice == 2)
@@ -172,15 +215,10 @@ namespace CompileItCLI
                     quit = true;
                 }
             }
-
-
-
             //display menu method
             // queury user for their choice
             // choices are add player, remove player, back to main menu
-
-
-        }
+         }
         
         private void DisplayPlayerMenu()
         {
