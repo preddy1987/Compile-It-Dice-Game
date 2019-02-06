@@ -216,11 +216,12 @@ namespace CompileItCLI
         private void DisplayPlayerMenu()
         {
             Console.Clear();
-            Console.WriteLine("1.) Add Player");
-            Console.WriteLine("2.) Remove Player");
-            Console.WriteLine("3.) List Players");
-            Console.WriteLine("4.) Remove All Players");
-            Console.WriteLine("5.) Back To Main Menu");
+            Console.WriteLine("1) Add Player");
+            Console.WriteLine("2) Remove Player");
+            Console.WriteLine("3) List Players");
+            Console.WriteLine("4) Remove All Players");
+            Console.WriteLine("5) Back To Main Menu");
+            Console.WriteLine();
         }
 
         private void DisplayLeaderBoard()
