@@ -181,8 +181,7 @@ namespace CompileItCLI
 
 
         }
-
-
+        
         private void DisplayPlayerMenu()
         {
             Console.Clear();
@@ -284,7 +283,7 @@ namespace CompileItCLI
             {
                 for (int i = 0; i < status.Count; i++)
                 {
-                    CompileItPlayer listedPlayer = (CompileItPlayer)status[i];
+                    var listedPlayer = status[i];
 
                     if (!(listedPlayer.Name).Equals(_game.CurrentPlayerName))
                     {
