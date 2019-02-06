@@ -17,6 +17,19 @@ namespace CompileIt
             }
         }
 
+        public List<Die> RemainingDie
+        {
+            get
+            {
+                List<Die> result = new List<Die>();
+                foreach(var die in _dice)
+                {
+                    result.Add(ObjectCopier.Clone(die));
+                }
+                return result;
+            }
+        }
+
         public Cup()
         {
             Reset();

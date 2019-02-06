@@ -4,6 +4,7 @@ using System.Text;
 
 namespace CompileIt
 {
+    [Serializable]
     public class YellowDie : Die
     {
         public YellowDie() : base(DieType.Yellow)

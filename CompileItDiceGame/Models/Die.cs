@@ -4,11 +4,11 @@ using System.Text;
 
 namespace CompileIt
 {
+    [Serializable]
     public abstract class Die
     {
         protected List<CompileType> _dieSides = new List<CompileType>();
-        private Random _dieRoller = new Random();
-
+        
         public DieType Type { get; }
         public int NumberOfSides
         {
@@ -37,10 +37,10 @@ namespace CompileIt
         /// Rolls the die and returns a randomly generated compile type from the die
         /// </summary>
         /// <returns></returns>
-        public CompileType Roll()
+        public CompileType Roll(Random dieRoller)
         {
             // This simulates a six sided die
-            int side = _dieRoller.Next(0, 5);
+            int side = dieRoller.Next(0, 5);
             return _dieSides[side];
         }
     }

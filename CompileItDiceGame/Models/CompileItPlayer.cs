@@ -14,6 +14,7 @@ namespace CompileIt
         private bool _turnOver = true;
         private List<Die> _lastWarningsDie = new List<Die>();
         private Cup _cup = new Cup();
+        private Random _dieRoller = new Random();
 
         public int RoundCount { get; private set; }
         public int TotalSuccesses { get; private set; }
@@ -44,7 +45,65 @@ namespace CompileIt
         {
             get
             {
-                return 0.50;
+                int numPotentialSuccesses = 0;
+                int numPotentialWarnings = 0;
+                int numPotentialErrors = 0;
+
+                foreach(var die in _lastWarningsDie)
+                {
+                    if(die.Type == DieType.Green)
+                    {
+                        numPotentialSuccesses += 3;
+                        numPotentialWarnings += 2;
+                        numPotentialErrors += 1;
+                    }
+                    else if(die.Type == DieType.Yellow)
+                    {
+                        numPotentialSuccesses += 2;
+                        numPotentialWarnings += 2;
+                        numPotentialErrors += 2;
+                    }
+                    else if (die.Type == DieType.Red)
+                    {
+                        numPotentialSuccesses += 1;
+                        numPotentialWarnings += 2;
+                        numPotentialErrors += 3;
+                    }
+                }
+
+                var dieInCup = _cup.RemainingDie;
+                foreach (var die in dieInCup)
+                {
+                    if (die.Type == DieType.Green)
+                    {
+                        numPotentialSuccesses += 3;
+                        numPotentialWarnings += 2;
+                        numPotentialErrors += 1;
+                    }
+                    else if (die.Type == DieType.Yellow)
+                    {
+                        numPotentialSuccesses += 2;
+                        numPotentialWarnings += 2;
+                        numPotentialErrors += 2;
+                    }
+                    else if (die.Type == DieType.Red)
+                    {
+                        numPotentialSuccesses += 1;
+                        numPotentialWarnings += 2;
+                        numPotentialErrors += 3;
+                    }
+                }
+
+                //Odds the next roll is a success
+                var nextRollOdds = 1.0 - ((double)numPotentialErrors / (numPotentialSuccesses + numPotentialWarnings + numPotentialErrors));
+
+                //Generate odds that next roll will end turn
+                for(int i = 0; i < TurnErrors; i++)
+                {
+                    nextRollOdds *= nextRollOdds;
+                }
+
+                return nextRollOdds;
             }
         }
 
@@ -88,7 +147,7 @@ namespace CompileIt
                 // Roll the dice
                 foreach (var die in pulledDice)
                 {
-                    var side = die.Roll();
+                    var side = die.Roll(_dieRoller);
                     if (side == CompileType.Error)
                     {
                         TurnErrors++;
@@ -108,17 +167,19 @@ namespace CompileIt
                 if (IsTurnOver)
                 {
                     TurnSuccesses = 0;
-                    RoundCount++;
                 }
             }
         }
 
         public void PassTurn()
         {
-            if (!IsWinner && !IsTurnOver)
+            if (!IsWinner)
             {
                 RoundCount++;
-                TotalSuccesses += TurnSuccesses;
+                if (!IsTurnOver)
+                {
+                    TotalSuccesses += TurnSuccesses;
+                }
                 ResetTurn();
             }
         }

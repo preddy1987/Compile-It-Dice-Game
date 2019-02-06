@@ -8,6 +8,7 @@ namespace CompileIt
     {
         double Odds { get; }
         bool HasWinner { get; }
+        bool IsLastRound { get; }
         ITurnStatus CurrentPlayerStatus { get; }
         bool IsTurnOver { get; }
         string CurrentPlayerName { get; }

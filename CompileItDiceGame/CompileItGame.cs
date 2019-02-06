@@ -9,6 +9,7 @@ namespace CompileIt
         private List<CompileItPlayer> _players = null;
 
         private int _currentPlayerIndex = 0;
+        private int _startPlayerIndex = 0;
         #endregion
 
         #region Properties
@@ -25,15 +26,47 @@ namespace CompileIt
             get
             {
                 bool hasWinner = false;
-                foreach(var player in _players)
+                CompileItPlayer winner = GetCurrentWinner();
+                if(winner != null)
                 {
-                    if(player.IsWinner)
+                    hasWinner = true;
+
+                    // Check to see if all players finished their last turn
+                    foreach (var player in _players)
                     {
-                        hasWinner = true;
+                        if (player.RoundCount != winner.RoundCount)
+                        {
+                            hasWinner = false;
+                        }
                     }
                 }
+
                 return hasWinner;
             }
+        }
+
+        public bool IsLastRound
+        {
+            get
+            {
+                return GetCurrentWinner() != null;
+            }
+        }
+
+        private CompileItPlayer GetCurrentWinner()
+        {
+            CompileItPlayer winner = null;
+            foreach (var player in _players)
+            {
+                if (player.IsWinner)
+                {
+                    if (winner == null || (winner != null && winner.TotalSuccesses < player.TotalSuccesses))
+                    {
+                        winner = player;
+                    }
+                }
+            }
+            return winner;
         }
 
         public string WinnerName
@@ -99,8 +132,12 @@ namespace CompileIt
         #region Methods
         public void Start(List<string> playerNames)
         {
-            _currentPlayerIndex = 0;
+            Random rnd = new Random();
+            _startPlayerIndex = rnd.Next(0, playerNames.Count);
+
             SetupPlayers(playerNames);
+
+            _currentPlayerIndex = _startPlayerIndex;
         }
 
         private void SetupPlayers(List<string> playerNames)
