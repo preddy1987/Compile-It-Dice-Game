@@ -36,6 +36,7 @@ namespace CompileItCLI
    ::::::`:::::;'  /  /   `#                       |");
 
             Console.ResetColor();
+            Console.Write("\n\t");
             switch (rando.Next(1, 8))
             {
                 case 1:
@@ -63,7 +64,16 @@ namespace CompileItCLI
                     Console.WriteLine("Has anyone really been far even as decided to use even go want to do look more like?");
                     break;
             }
-            Console.ReadKey();
+            Console.WriteLine("\nPress enter to continue.");
+            string check = Console.ReadLine();
+            if (check == "diabeetus")
+            {
+                Utility.PlaySound("Diabeetus.wav");
+            }
+            else
+            {
+                
+            }
         }
     }
 }
