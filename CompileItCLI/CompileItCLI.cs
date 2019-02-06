@@ -115,7 +115,7 @@ namespace CompileItCLI
 
         private void FontMenu()
         {
-
+            Utility.PlaySound("scream.wav");
         }
 
         private void PlayerMenu()
@@ -267,10 +267,12 @@ namespace CompileItCLI
 
                         if (selection == 1)
                         {
+                            Utility.PlaySound("thunder.wav");
                             RollDice();
                         }
                         else if (selection == 2)
                         {
+                            Utility.PlaySound("skids.wav");
                             _game.PassTurn();
                         }
                         else if (selection == 3)
