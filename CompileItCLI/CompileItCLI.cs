@@ -19,7 +19,7 @@ namespace CompileItCLI
         {
             _game = game;
 
-            Utility.PlaySound("air_raid.wav");
+            Utility.PlaySound("trumpet.wav");
 
             DisplaySplashScreen();
         }
@@ -106,6 +106,8 @@ namespace CompileItCLI
 
         public void PlayGame()
         {
+            Utility.PlaySound("pool_break.wav");
+
             _game.Start(_players);
 
             TurnMenu();
@@ -113,7 +115,7 @@ namespace CompileItCLI
 
         private void FontMenu()
         {
-
+            Utility.PlaySound("scream.wav");
         }
 
         private void PlayerMenu()
@@ -245,6 +247,7 @@ namespace CompileItCLI
 
                     if (_game.HasWinner)
                     {
+                        Utility.PlaySound("applause.wav");
                         _game.SaveWinner(_game.CurrentPlayerName);
                         Console.Clear();
                         Console.WriteLine("The winner is " + _game.CurrentPlayerName);
@@ -264,10 +267,12 @@ namespace CompileItCLI
 
                         if (selection == 1)
                         {
+                            Utility.PlaySound("thunder.wav");
                             RollDice();
                         }
                         else if (selection == 2)
                         {
+                            Utility.PlaySound("skids.wav");
                             _game.PassTurn();
                         }
                         else if (selection == 3)
@@ -295,6 +300,7 @@ namespace CompileItCLI
 
             if (status.TurnErrors >= 3)
             {
+                Utility.PlaySound("whah_whah.wav");
                 Console.Clear();
                 Console.WriteLine("You busted!\n\nPress any key to continue...");
                 Console.ReadKey();
