@@ -166,6 +166,35 @@ namespace CompileItCLI
         private void DisplayScoreBoard()
         {
             var status = _game.PlayersStatus;
+
+            Console.Clear();
+            Console.WriteLine("SCORE BOARD");
+            Console.WriteLine();
+
+            try
+            {
+                for (int i = 0; i < status.Count; i++)
+                {
+                    CompileItPlayer listedPlayer = (CompileItPlayer)status[i];
+
+                    if (!(listedPlayer.Name).Equals(_game.CurrentPlayerName))
+                    {
+                        Console.WriteLine((listedPlayer.Name + " ").PadRight(20, '-') + (status[i].TotalSuccesses).ToString().PadLeft(3) + " Successes");
+                    }
+                    else
+                    {
+                        Console.WriteLine("You ".PadRight(20, '-') + (status[i].TotalSuccesses).ToString().PadLeft(3) + " Successes");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Oops... the Score Board freaked out and exploded. Please contact tech support.");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         private void DisplayPlayerStatus()
