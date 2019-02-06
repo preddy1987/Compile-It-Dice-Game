@@ -92,7 +92,8 @@ namespace CompileItCLI
 
         private void DisplaySuicideScreen()
         {
-
+            Suicide quitGame = new Suicide();
+            quitGame.SuicideScreen();
         }
 
         private void TurnMenu()
@@ -219,5 +220,7 @@ namespace CompileItCLI
         {
 
         }
+
+       
     }
 }
