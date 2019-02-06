@@ -69,7 +69,14 @@ namespace CompileItCLI
             };
 
             // Setup player colors
-          
+            foreach (string player in players)
+            {
+
+                int index = players.IndexOf(player);
+
+
+
+            }
 
             _game.Start(players);
 
@@ -219,15 +226,21 @@ namespace CompileItCLI
             ResetColor();
         }
 
-      
+        public Dictionary<int, ConsoleColor> ColorDictionary = new Dictionary<int, ConsoleColor>()
+                {
+                    {0, ConsoleColor.Blue}
+
+                };
         private void SetColor()
-        { 
-        //_game.CurrentPlayerName
-           
-         }
+        {
+            Console.ForegroundColor = ColorDictionary[0];
+            //_game.CurrentPlayerName
+
+        }
 
         private void ResetColor()
         {
+            Console.ResetColor();
         }
     
     
