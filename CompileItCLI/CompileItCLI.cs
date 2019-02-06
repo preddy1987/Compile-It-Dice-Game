@@ -216,11 +216,12 @@ namespace CompileItCLI
         private void DisplayPlayerMenu()
         {
             Console.Clear();
-            Console.WriteLine("1.) Add Player");
-            Console.WriteLine("2.) Remove Player");
-            Console.WriteLine("3.) List Players");
-            Console.WriteLine("4.) Remove All Players");
-            Console.WriteLine("5.) Back To Main Menu");
+            Console.WriteLine("1) Add Player");
+            Console.WriteLine("2) Remove Player");
+            Console.WriteLine("3) List Players");
+            Console.WriteLine("4) Remove All Players");
+            Console.WriteLine("5) Back To Main Menu");
+            Console.WriteLine();
         }
 
         private void DisplayLeaderBoard()
@@ -352,16 +353,39 @@ namespace CompileItCLI
         {
             // Add colors for different players
             SetColor();
-
             // Undergo Beautification
             var status = _game.CurrentPlayerStatus;
-            Console.WriteLine($"Player: {_game.CurrentPlayerName}");
-            Console.WriteLine($"Round: {status.RoundCount} {(_game.IsLastRound ? " Last Turn" : "")}");
-            Console.WriteLine($"Total Successes: {status.TotalSuccesses}");
-            Console.WriteLine($"Turn Errors: {status.TurnErrors}");
-            Console.WriteLine($"Turn Successes: {status.TurnSuccesses}");
-            Console.WriteLine($"Turn Warnings: {status.TurnWarnings}");
-            Console.WriteLine($"Odds: {status.Odds.ToString("N2")}");
+            string header = "*";
+            string player = $"Player: {_game.CurrentPlayerName}";
+            string round = $"Round: {status.RoundCount} {(_game.IsLastRound ? " Last Turn" : "")}";
+            string totalSuccesses = $"Total Successes: {status.TotalSuccesses}";
+            string turnErrors = $"Turn Errors: {status.TurnErrors}";
+            string turnSuccesses = $"Turn Successes: {status.TurnSuccesses}";
+            string turnWarnings = $"Turn Warnings: {status.TurnWarnings}";
+            string odds = $"Odds: {status.Odds.ToString("N2")}";
+            Console.WriteLine(header.PadLeft(30, '*'));
+            Console.WriteLine($"{header.PadRight(29,' ').PadLeft(26,' ')}*");
+            Console.WriteLine($"*{player.PadLeft(20, ' ').PadRight(28,' ')}*");
+            Console.WriteLine($"{header.PadRight(29, ' ').PadLeft(26, ' ')}*");
+            Console.WriteLine(header.PadLeft(30, '*'));
+            ResetColor();
+            Console.WriteLine($"*{round.PadLeft(21, ' ').PadRight(28, ' ')}*");
+            Console.WriteLine($"*{totalSuccesses.PadLeft(20, ' ').PadRight(28, ' ')}*");
+            Console.WriteLine($"*{turnErrors.PadLeft(20, ' ').PadRight(28, ' ')}*");
+            Console.WriteLine($"*{turnSuccesses.PadLeft(20, ' ').PadRight(28, ' ')}*");
+            Console.WriteLine($"*{turnWarnings.PadLeft(20, ' ').PadRight(28, ' ')}*");
+            Console.WriteLine($"*{odds.PadLeft(23, ' ').PadRight(28, ' ')}*");
+            Console.WriteLine(header.PadLeft(30, '*'));
+
+            //this was the original code before Beautification
+            //Console.WriteLine(MyString.PadLeft(20, '-'));
+            //Console.WriteLine($"Player: {_game.CurrentPlayerName}");
+            //Console.WriteLine($"Round: {status.RoundCount} {(_game.IsLastRound ? " Last Turn" : "")}");
+            //Console.WriteLine($"Total Successes: {status.TotalSuccesses}");
+            //Console.WriteLine($"Turn Errors: {status.TurnErrors}");
+            //Console.WriteLine($"Turn Successes: {status.TurnSuccesses}");
+            //Console.WriteLine($"Turn Warnings: {status.TurnWarnings}");
+            //Console.WriteLine($"Odds: {status.Odds.ToString("N2")}");
             // Add information about dice in cup
 
             //return total amount of die remaining in the cup
