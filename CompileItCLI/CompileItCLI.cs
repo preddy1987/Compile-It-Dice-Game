@@ -394,14 +394,17 @@ namespace CompileItCLI
 
         public Dictionary<int, ConsoleColor> ColorDictionary = new Dictionary<int, ConsoleColor>()
                 {
-                    {0, ConsoleColor.Blue}
-
+                    {0, ConsoleColor.Blue},
+                    {1, ConsoleColor.DarkMagenta},
+                    {2, ConsoleColor.Red},
+                    {3, ConsoleColor.Yellow},
+                    {4, ConsoleColor.White},
+                    {5, ConsoleColor.Cyan}
                 };
         private void SetColor()
         {
-            Console.ForegroundColor = ColorDictionary[0];
+            Console.ForegroundColor = ColorDictionary[_players.IndexOf(_game.CurrentPlayerName)];
             //_game.CurrentPlayerName
-
         }
 
         private void ResetColor()
