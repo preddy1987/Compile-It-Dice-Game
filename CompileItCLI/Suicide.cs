@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CompileItCLI
 {
-    class Suicide
+    public class Suicide
     {
         public void SuicideScreen()
         {

@@ -16,6 +16,7 @@ namespace CompileIt
 
         void Start(List<string> playerNames);
         ITurnStatus RollDice();
-        string PassTurn();        
+        string PassTurn();
+        void SaveWinner(string playerName);
     }
 }

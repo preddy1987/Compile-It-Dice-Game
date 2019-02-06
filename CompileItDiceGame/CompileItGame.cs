@@ -203,8 +203,18 @@ namespace CompileIt
                 CurrentPlayer.PassTurn();
                 UpdatePlayerIndex();
             }
+
             return CurrentPlayerName;
         }
+
+        public void SaveWinner(string playerName)
+        {
+            // If game win file exists load here
+            // If playerName exist increment wins by 1
+            // Else add player to list
+            // Save game data to file
+        }
+
         #endregion
     }
 }
