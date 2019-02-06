@@ -95,7 +95,7 @@ namespace CompileItCLI
 
         private void DisplayLeaderBoard()
         {
-
+            
         }
 
         private void DisplaySuicideScreen()
@@ -114,8 +114,11 @@ namespace CompileItCLI
 
                     if (_game.HasWinner)
                     {
+<<<<<<< HEAD
+=======
                         // Log winner data to file
                         _game.SaveWinner(_game.CurrentPlayerName);
+>>>>>>> f75279db723c075fb6c74ef10a235ca027150114
                         Console.Clear();
                         Console.WriteLine("The winner is " + _game.CurrentPlayerName);
                         Console.ReadKey();
