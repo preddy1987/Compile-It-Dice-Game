@@ -9,10 +9,11 @@ namespace CompileItCLI
     {
         private ICompileItGame _game = null;
 
-        private List<string> _players = new List<string>();
-            
-               
-           
+        private List<string> _players = new List<string>()
+        {
+            "Chris",
+            "Amy"
+        };
 
         public CompileItCLI(ICompileItGame game)
         {
@@ -75,18 +76,6 @@ namespace CompileItCLI
 
         public void PlayGame()
         {
-            
-
-            // Setup player colors
-            foreach (string player in players)
-            {
-
-                int index = players.IndexOf(player);
-
-
-
-            }
-
             _game.Start(_players);
 
             TurnMenu();
@@ -172,7 +161,7 @@ namespace CompileItCLI
 
 
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 Console.WriteLine("Please enter 1, 2, or 3.  Hit any key to continue.");
             }
@@ -208,11 +197,7 @@ namespace CompileItCLI
 
                     if (_game.HasWinner)
                     {
-<<<<<<< HEAD
-=======
-                        // Log winner data to file
                         _game.SaveWinner(_game.CurrentPlayerName);
->>>>>>> f75279db723c075fb6c74ef10a235ca027150114
                         Console.Clear();
                         Console.WriteLine("The winner is " + _game.CurrentPlayerName);
                         Console.ReadKey();
