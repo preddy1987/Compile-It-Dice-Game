@@ -64,6 +64,7 @@ namespace CompileItCLI
             {
                 if (numberOfAttempts > 0)
                 {
+                    Utility.PlaySound("ahem.wav");
                     Console.WriteLine($"\nInvalid input format. Selection must be a number between { startRange} and { endRange}.");
                 }
 
