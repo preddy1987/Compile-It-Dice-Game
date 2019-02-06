@@ -9,11 +9,7 @@ namespace CompileItCLI
     {
         private ICompileItGame _game = null;
 
-        private List<string> _players = new List<string>()
-        {
-            "Chris",
-            "Amy"
-        };
+        private List<string> _players = new List<string>();
 
         public CompileItCLI(ICompileItGame game)
         {
@@ -89,20 +85,96 @@ namespace CompileItCLI
         private void PlayerMenu()
         {
             // loop for valid input
-            bool validChoice = false;
             int playerChoice = 0;
             bool quit = false;
 
-            while (!validChoice || quit)
+            while (!quit)
             {
                 DisplayPlayerMenu();
-                playerChoice = PlayerMenuChoice();
-                
-                ProcessMenuChoice(playerChoice);
+                playerChoice = CLIHelper.GetSingleInteger("Select an option...", 1, 5);
+                if (playerChoice == 1)
+                {
+                    string playerName = "";
+                    bool nameAdded = false;
+                    while (!nameAdded)
+                    {
+                        nameAdded = true;
+                        Console.WriteLine("\nEnter Name to add.");
+                        playerName = Console.ReadLine();
+                        if (playerName != "")
+                        {
+                            foreach (string name in _players)
+                            {
+                                if (name == playerName)
+                                {
+                                    Console.WriteLine("Name is already taken, choose another.");
+                                    nameAdded = false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("You can't enter an empty name, choose another.");
+                            nameAdded = false;
+                        }
+
+                    }
+                    //we have A UNIQUE NAME.
+                    _players.Add(playerName);
+
+
+                }
+                else if (playerChoice == 2)
+                {
+                    int holdIndex = -1;
+                    string playerName = "";
+                    Console.WriteLine("\nEnter Name to remove");
+                    playerName = Console.ReadLine();
+
+                    for (int i = 0; i < _players.Count; i++)
+                    {
+                        //Check to see if player exists.
+                        if (_players[i] == playerName)
+                        {
+                            holdIndex = i;
+                        }
+                    }
+                    if (holdIndex != -1)
+                    {
+                        _players.Remove(playerName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("This is not a player name.  Nothing to remove.  Hit any key to continue.");
+                        Console.ReadKey();
+                    }
+                }
+                else if (playerChoice == 3)
+                {
+                    int i = 1;
+                    Console.WriteLine("\n\nList of Current Players in the game:");
+                    foreach (string player in _players)
+                    {
+                        Console.WriteLine($"Player {i}: {player}");
+                        i++;
+                    }
+                    Console.WriteLine("\nHit any key to continue.");
+                    Console.ReadKey();
+                }
+                else if (playerChoice == 4)
+                {
+                    _players.Clear();
+                    Console.WriteLine("\n\nAll players have been removed.  Hit any key to continue.");
+                    Console.ReadKey();
+                }
+                else if (playerChoice == 5)
+                {
+                    quit = true;
+                }
             }
 
-            
-                
+
+
             //display menu method
             // queury user for their choice
             // choices are add player, remove player, back to main menu
@@ -110,70 +182,15 @@ namespace CompileItCLI
 
         }
 
-        private void ProcessMenuChoice(int playerChoice)
-        {
-            if(playerChoice == 1)
-            {
-                string playerName = "";
-                bool nameAdded = false;
-                while (!nameAdded)
-                {
-                    nameAdded = true;
-                    Console.WriteLine("Enter Name");
-                    playerName = Console.ReadLine();
-                    foreach (string name in _players)
-                    {
-                        if (name == playerName)
-                        {
-                            Console.WriteLine("Name is already taken, choose another.");
-                            nameAdded = false;
-                        }
-                    }
-                }
-                //we have A UNIQUE NAME.
-                _players.Add(playerName);
-                    
-
-            }
-            else if(playerChoice == 2)
-            {
-
-            }
-            else if(playerChoice == 3)
-            {
-
-            }
-
-
-        }
-        private int PlayerMenuChoice()
-        {
-            string userInput = Console.ReadLine();
-            int playerChoice = 0;
-            int result = 0;
-            try
-            {
-                playerChoice = int.Parse(userInput);
-                if(playerChoice >=1 || playerChoice <= 3)
-                {
-                    result = playerChoice;
-                }
-
-
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Please enter 1, 2, or 3.  Hit any key to continue.");
-            }
-            return result;
-        }
 
         private void DisplayPlayerMenu()
         {
             Console.Clear();
             Console.WriteLine("1.) Add Player");
             Console.WriteLine("2.) Remove Player");
-            Console.WriteLine("3.) Back To Main Menu");
+            Console.WriteLine("3.) List Players");
+            Console.WriteLine("4.) Remove All Players");
+            Console.WriteLine("5.) Back To Main Menu");
         }
 
         private void DisplayLeaderBoard()
