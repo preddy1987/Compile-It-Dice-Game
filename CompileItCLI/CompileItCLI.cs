@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.IO;
 using CompileIt;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace CompileItCLI
 {
@@ -10,10 +13,13 @@ namespace CompileItCLI
         private ICompileItGame _game = null;
 
         private List<string> _players = new List<string>();
+        private string _playerFileName= "CompileItPlayerList.dat";
 
         public CompileItCLI(ICompileItGame game)
         {
             _game = game;
+
+            Utility.PlaySound("air_raid.wav");
 
             DisplaySplashScreen();
         }
@@ -21,16 +27,9 @@ namespace CompileItCLI
         public void MainMenu()
         {
             bool quitGame = false;
+            LoadPlayers();  //Load players at startup.
             while (!quitGame)
             {
-
-                // Player Management
-
-
-                // Leader Board
-                // Start Game (Turn Menu)
-                // Change Font
-
                 Console.Clear();
                 Console.WriteLine("1) Player Management");
                 Console.WriteLine("2) Leader Board");
@@ -65,6 +64,41 @@ namespace CompileItCLI
             }
         }
 
+        private void LoadPlayers()
+        {
+            //Load players from a file at startup.
+            try
+            {
+                using (Stream stream = File.Open(_playerFileName, FileMode.Open))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+                    _players = (List<string>)bin.Deserialize(stream);
+                }
+            }
+            catch (IOException)
+            {
+                //First time through, we don't have a file.  This is ok.
+            }
+        
+        }
+
+        private void SavePlayers()
+        {
+            try
+            {
+                using (Stream stream = File.Open(_playerFileName, FileMode.Create))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+                    bin.Serialize(stream, _players);
+                }
+            }
+            catch (IOException)
+            {
+            }
+            
+        }
+
+
         public void DisplaySplashScreen()
         {
 
@@ -90,6 +124,9 @@ namespace CompileItCLI
 
             while (!quit)
             {
+                //display menu method
+                // query user for their choice
+                // choices are add player, remove player, list players, remove all players, back to main menu
                 DisplayPlayerMenu();
                 playerChoice = CLIHelper.GetSingleInteger("Select an option...", 1, 5);
                 if (playerChoice == 1)
@@ -121,7 +158,7 @@ namespace CompileItCLI
                     }
                     //we have A UNIQUE NAME.
                     _players.Add(playerName);
-
+                    SavePlayers();
 
                 }
                 else if (playerChoice == 2)
@@ -172,16 +209,8 @@ namespace CompileItCLI
                     quit = true;
                 }
             }
-
-
-
-            //display menu method
-            // queury user for their choice
-            // choices are add player, remove player, back to main menu
-
-
-        }
-
+         }
+        
         private void DisplayPlayerMenu()
         {
             Console.Clear();
@@ -199,6 +228,8 @@ namespace CompileItCLI
 
         private void DisplaySuicideScreen()
         {
+            Utility.PlaySound("taps.wav");
+
             Suicide quitGame = new Suicide();
             quitGame.SuicideScreen();
         }
@@ -279,6 +310,8 @@ namespace CompileItCLI
             Console.WriteLine("SCORE BOARD");
             Console.WriteLine();
 
+            Utility.PlaySound("LOZ_Fanfare.wav");
+
             try
             {
                 for (int i = 0; i < status.Count; i++)
@@ -298,8 +331,6 @@ namespace CompileItCLI
                         Console.WriteLine((listedPlayer.RoundCount).ToString().PadLeft(3) + " Rounds Completed");
                     }
                 }
-
-                //playsound
             }
             catch (Exception)
             {
