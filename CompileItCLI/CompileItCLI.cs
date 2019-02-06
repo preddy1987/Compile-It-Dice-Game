@@ -245,7 +245,6 @@ namespace CompileItCLI
             XmlSerializer xmlSerializer = new XmlSerializer(playerScores.GetType());
 
             int highestScore = 0;
-            int previousNumber = 0;
 
             // If game win file exists load here
             if (File.Exists(fullPath))
@@ -440,6 +439,7 @@ namespace CompileItCLI
         {
             // Add colors for different players
             SetColor();
+            
             // Undergo Beautification
             var status = _game.CurrentPlayerStatus;
             string header = "*";
@@ -470,10 +470,13 @@ namespace CompileItCLI
             Console.WriteLine(header.PadLeft(30, '*'));
 
             Console.WriteLine($"{header.PadRight(29, ' ').PadLeft(26, ' ')}*");
+            
             // Add information about dice in cup
             Console.WriteLine($"*{odds.PadLeft(23, ' ').PadRight(28, ' ')}*");
+            
             //return total amount of die remaining in the cup
             Console.WriteLine($"*{remainingDie.PadLeft(21, ' ').PadRight(28, ' ')}*");
+            
             //color of the remaining die in the cup and quantity
             int greenCounter = 0;
             int redCounter = 0;
@@ -493,16 +496,12 @@ namespace CompileItCLI
                     yellowCounter += 1;
                 }
             }
-<<<<<<< HEAD
 
-=======
             string greenDie = $"Green: {greenCounter} ";
             string yellowDie = $"Yellow: {yellowCounter} ";
             string redDie = $"Red: {redCounter}";
 
-            
             Console.Write("*");
->>>>>>> 64806ce9281a4d524bd424cfa1ba6a232f68aef3
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(greenDie.PadLeft(10,' '));
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -517,21 +516,7 @@ namespace CompileItCLI
             Console.WriteLine(header.PadLeft(30, '*'));
             Console.WriteLine();
 
-
             ResetColor();
-
-            //this was the original code before Beautification
-            //Console.WriteLine(MyString.PadLeft(20, '-'));
-            //Console.WriteLine($"Player: {_game.CurrentPlayerName}");
-            //Console.WriteLine($"Round: {status.RoundCount} {(_game.IsLastRound ? " Last Turn" : "")}");
-            //Console.WriteLine($"Total Successes: {status.TotalSuccesses}");
-            //Console.WriteLine($"Turn Errors: {status.TurnErrors}");
-            //Console.WriteLine($"Turn Successes: {status.TurnSuccesses}");
-            //Console.WriteLine($"Turn Warnings: {status.TurnWarnings}");
-            //Console.WriteLine($"Odds: {status.Odds.ToString("N2")}");
-
-
-
         }
 
         public Dictionary<int, ConsoleColor> ColorDictionary = new Dictionary<int, ConsoleColor>()
@@ -546,7 +531,6 @@ namespace CompileItCLI
         private void SetColor()
         {
             Console.ForegroundColor = ColorDictionary[_players.IndexOf(_game.CurrentPlayerName)];
-            //_game.CurrentPlayerName
         }
 
         private void ResetColor()
@@ -555,11 +539,6 @@ namespace CompileItCLI
         }
 
     }
-
-
-
-
-
 }
 
 
