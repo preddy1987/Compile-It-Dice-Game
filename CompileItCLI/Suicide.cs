@@ -69,7 +69,7 @@ namespace CompileItCLI
                     Console.WriteLine("You took the easy way out...");
                     break;
                 case 4:
-                    Console.WriteLine("You quit ASSHOLE!!!");
+                    Console.WriteLine("You quit &*$&#%@^!!!");
                     break;
                 case 5:
                     Console.WriteLine("GAME OVER");
