@@ -1,5 +1,9 @@
-﻿using System;
+﻿using CompileItDiceGame.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace CompileIt
 {
@@ -209,10 +213,60 @@ namespace CompileIt
 
         public void SaveWinner(string playerName)
         {
+            PlayerScore pastPlayers = new PlayerScore();
+      
+            string currentDir = Environment.CurrentDirectory + @"\..\..\..\..";
+
+            string fileName = "LeaderBoard.xml";
+
+            string fullPath = Path.Combine(currentDir, fileName);
+
+            List<PlayerScore> playerScores = new List<PlayerScore>();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(playerScores.GetType());
+
             // If game win file exists load here
-            // If playerName exist increment wins by 1
-            // Else add player to list
-            // Save game data to file
+            if (File.Exists(fullPath))
+            {
+                // Reads the xml and adds the objects to the pastPlayers list
+                using (StreamReader strReader = new StreamReader(fullPath))
+                {
+                    playerScores = (List<PlayerScore>) xmlSerializer.Deserialize(strReader);
+                }
+            }
+
+            bool playerExists = false;
+            foreach(var player in playerScores)
+            {
+                if(player.PlayerName == playerName)
+                {
+                    player.NumOfWins++;
+                    playerExists = true;
+                }
+            }
+
+            // If they are in the leader board file, increment wins
+            if(!playerExists)
+            {
+                PlayerScore currentWinner = new PlayerScore();
+
+                currentWinner.PlayerName = playerName;
+
+                currentWinner.NumOfWins = 1;
+
+                playerScores.Add(currentWinner);
+            }
+
+            using (StringWriter strWriter = new StringWriter())
+            {
+                using (XmlWriter xmlWriter = XmlWriter.Create(strWriter))
+                {                    
+                        xmlSerializer.Serialize(xmlWriter, playerScores);
+                        string outXml = strWriter.ToString();
+
+                        File.WriteAllText(fullPath, outXml);
+                }
+            }
         }
 
         #endregion

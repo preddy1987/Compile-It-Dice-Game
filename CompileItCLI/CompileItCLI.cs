@@ -5,6 +5,8 @@ using System.Text;
 using System.IO;
 using CompileIt;
 using System.Runtime.Serialization.Formatters.Binary;
+using CompileItDiceGame.Models;
+using System.Xml.Serialization;
 
 namespace CompileItCLI
 {
@@ -13,7 +15,7 @@ namespace CompileItCLI
         private ICompileItGame _game = null;
 
         private List<string> _players = new List<string>();
-        private string _playerFileName= "CompileItPlayerList.dat";
+        private string _playerFileName = "CompileItPlayerList.dat";
 
         public CompileItCLI(ICompileItGame game)
         {
@@ -79,7 +81,7 @@ namespace CompileItCLI
             {
                 //First time through, we don't have a file.  This is ok.
             }
-        
+
         }
 
         private void SavePlayers()
@@ -95,7 +97,7 @@ namespace CompileItCLI
             catch (IOException)
             {
             }
-            
+
         }
 
 
@@ -211,8 +213,8 @@ namespace CompileItCLI
                     quit = true;
                 }
             }
-         }
-        
+        }
+
         private void DisplayPlayerMenu()
         {
             Console.Clear();
@@ -225,7 +227,86 @@ namespace CompileItCLI
 
         private void DisplayLeaderBoard()
         {
+            Console.Clear();
 
+            string currentDir = Environment.CurrentDirectory + @"\..\..\..\..";
+
+            string fileName = "LeaderBoard.xml";
+
+            string fullPath = Path.Combine(currentDir, fileName);
+
+            List<PlayerScore> playerScores = new List<PlayerScore>();
+
+            List<PlayerScore> leaderBoard = new List<PlayerScore>();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(playerScores.GetType());
+
+            int highestScore = 0;
+            int previousNumber = 0;
+
+            // If game win file exists load here
+            if (File.Exists(fullPath))
+            {
+                // Reads the xml and adds the objects to the pastPlayers list
+                using (StreamReader strReader = new StreamReader(fullPath))
+                {
+                    playerScores = (List<PlayerScore>)xmlSerializer.Deserialize(strReader);
+                }
+            }
+
+            if (playerScores.Count == 0)
+            {
+                Console.Clear();
+                Console.WriteLine("No one has played your stupid game :(");
+            }
+            else
+            {
+                for (int i = 0; i < playerScores.Count; i++)
+                {
+                    if (playerScores[i].NumOfWins > highestScore)
+                    {
+                        leaderBoard.Insert(0, playerScores[i]);
+                        highestScore = playerScores[i].NumOfWins;
+                    }
+                    else
+                    {
+                        bool isHigher = false;
+
+                        while (!isHigher)
+                        {
+                            for (int j = 0; j < leaderBoard.Count; j++)
+                            {
+                                if (playerScores[i].NumOfWins > leaderBoard[j].NumOfWins)
+                                {
+                                    leaderBoard.Insert(j, playerScores[i]);
+                                    j = leaderBoard.Count;
+                                    isHigher = true;
+                                }
+                                else if(playerScores[i].NumOfWins == leaderBoard[j].NumOfWins)
+                                {
+                                    leaderBoard.Insert(j, playerScores[i]);
+                                    j = leaderBoard.Count;
+                                    isHigher = true;
+                                }
+                            }
+
+                            if (!isHigher)
+                            {
+                                leaderBoard.Add(playerScores[i]);
+                                isHigher = true;
+                            }
+                        }
+                        
+                    }
+                }
+
+                foreach (PlayerScore player in leaderBoard)
+                {
+                    Console.WriteLine($"{player.PlayerName} : {player.NumOfWins}");
+                }
+            }
+
+            Console.ReadKey();
         }
 
         private void DisplaySuicideScreen()
@@ -371,7 +452,7 @@ namespace CompileItCLI
             int redCounter = 0;
             int yellowCounter = 0;
             foreach (var die in status.RemainingDice)
-            {              
+            {
                 if (die.Type == DieType.Green)
                 {
                     greenCounter += 1;
@@ -385,7 +466,7 @@ namespace CompileItCLI
                     yellowCounter += 1;
                 }
             }
-            
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write($"Green: {greenCounter} ");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -419,16 +500,16 @@ namespace CompileItCLI
 
     }
 
-   
-        
 
-        
-    }
-      
-    
-    
-        
 
-       
-    
+
+
+}
+
+
+
+
+
+
+
 
