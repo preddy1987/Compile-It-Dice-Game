@@ -8,6 +8,7 @@ namespace CompileItCLI
     {
         public void SuicideScreen()
         {
+            Console.Clear();
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine(@"                                                   |
