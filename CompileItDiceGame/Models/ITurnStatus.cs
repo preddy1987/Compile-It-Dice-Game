@@ -6,6 +6,7 @@ namespace CompileIt
 {
     public interface IPlayerStatus
     {
+        string Name { get; }
         int RoundCount { get; }
         int TotalSuccesses { get; }
     }

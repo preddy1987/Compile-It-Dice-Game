@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using CompileIt;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace CompileItCLI
 {
@@ -10,6 +12,7 @@ namespace CompileItCLI
         private ICompileItGame _game = null;
 
         private List<string> _players = new List<string>();
+        private string _playerFileName= "CompileItPlayerList.dat";
 
         public CompileItCLI(ICompileItGame game)
         {
@@ -21,6 +24,7 @@ namespace CompileItCLI
         public void MainMenu()
         {
             bool quitGame = false;
+            LoadPlayers();  //Load players at startup.
             while (!quitGame)
             {
 
@@ -65,6 +69,41 @@ namespace CompileItCLI
             }
         }
 
+        private void LoadPlayers()
+        {
+            //Load players from a file at startup.
+            try
+            {
+                using (Stream stream = File.Open(_playerFileName, FileMode.Open))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+                    _players = (List<string>)bin.Deserialize(stream);
+                }
+            }
+            catch (IOException)
+            {
+                //First time through, we don't have a file.  This is ok.
+            }
+        
+        }
+
+        private void SavePlayers()
+        {
+            try
+            {
+                using (Stream stream = File.Open(_playerFileName, FileMode.Create))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+                    bin.Serialize(stream, _players);
+                }
+            }
+            catch (IOException)
+            {
+            }
+            
+        }
+
+
         public void DisplaySplashScreen()
         {
 
@@ -90,6 +129,9 @@ namespace CompileItCLI
 
             while (!quit)
             {
+                //display menu method
+                // query user for their choice
+                // choices are add player, remove player, list players, remove all players, back to main menu
                 DisplayPlayerMenu();
                 playerChoice = CLIHelper.GetSingleInteger("Select an option...", 1, 5);
                 if (playerChoice == 1)
@@ -121,7 +163,7 @@ namespace CompileItCLI
                     }
                     //we have A UNIQUE NAME.
                     _players.Add(playerName);
-
+                    SavePlayers();
 
                 }
                 else if (playerChoice == 2)
@@ -172,17 +214,9 @@ namespace CompileItCLI
                     quit = true;
                 }
             }
-
-
-
-            //display menu method
-            // queury user for their choice
-            // choices are add player, remove player, back to main menu
-
-
-        }
-
-
+            
+         }
+        
         private void DisplayPlayerMenu()
         {
             Console.Clear();
@@ -284,7 +318,7 @@ namespace CompileItCLI
             {
                 for (int i = 0; i < status.Count; i++)
                 {
-                    CompileItPlayer listedPlayer = (CompileItPlayer)status[i];
+                    var listedPlayer = status[i];
 
                     if (!(listedPlayer.Name).Equals(_game.CurrentPlayerName))
                     {
@@ -357,14 +391,17 @@ namespace CompileItCLI
 
         public Dictionary<int, ConsoleColor> ColorDictionary = new Dictionary<int, ConsoleColor>()
                 {
-                    {0, ConsoleColor.Blue}
-
+                    {0, ConsoleColor.Blue},
+                    {1, ConsoleColor.DarkMagenta},
+                    {2, ConsoleColor.Red},
+                    {3, ConsoleColor.Yellow},
+                    {4, ConsoleColor.White},
+                    {5, ConsoleColor.Cyan}
                 };
         private void SetColor()
         {
-            Console.ForegroundColor = ColorDictionary[0];
+            Console.ForegroundColor = ColorDictionary[_players.IndexOf(_game.CurrentPlayerName)];
             //_game.CurrentPlayerName
-
         }
 
         private void ResetColor()
