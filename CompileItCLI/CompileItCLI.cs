@@ -9,6 +9,11 @@ namespace CompileItCLI
     {
         private ICompileItGame _game = null;
 
+        private List<string> _players = new List<string>();
+            
+               
+           
+
         public CompileItCLI(ICompileItGame game)
         {
             _game = game;
@@ -21,6 +26,14 @@ namespace CompileItCLI
             bool quitGame = false;
             while (!quitGame)
             {
+
+                // Player Management
+
+
+                // Leader Board
+                // Start Game (Turn Menu)
+                // Change Font
+
                 Console.Clear();
                 Console.WriteLine("1) Player Management");
                 Console.WriteLine("2) Leader Board");
@@ -31,7 +44,7 @@ namespace CompileItCLI
 
                 int selection = CLIHelper.GetSingleInteger("Select an option...", 1, 5);
 
-                if(selection == 1)
+                if (selection == 1)
                 {
                     PlayerMenu();
                 }
@@ -51,6 +64,7 @@ namespace CompileItCLI
                 {
                     quitGame = true;
                 }
+
             }
         }
 
@@ -61,16 +75,19 @@ namespace CompileItCLI
 
         public void PlayGame()
         {
-            List<string> players = new List<string>()
-            {
-                "Chris",
-                "Adam",
-                "William"
-            };
+            
 
             // Setup player colors
+            foreach (string player in players)
+            {
 
-            _game.Start(players);
+                int index = players.IndexOf(player);
+
+
+
+            }
+
+            _game.Start(_players);
 
             TurnMenu();
         }
@@ -82,12 +99,97 @@ namespace CompileItCLI
 
         private void PlayerMenu()
         {
+            // loop for valid input
+            bool validChoice = false;
+            int playerChoice = 0;
+            bool quit = false;
 
+            while (!validChoice || quit)
+            {
+                DisplayPlayerMenu();
+                playerChoice = PlayerMenuChoice();
+                
+                ProcessMenuChoice(playerChoice);
+            }
+
+            
+                
+            //display menu method
+            // queury user for their choice
+            // choices are add player, remove player, back to main menu
+
+
+        }
+
+        private void ProcessMenuChoice(int playerChoice)
+        {
+            if(playerChoice == 1)
+            {
+                string playerName = "";
+                bool nameAdded = false;
+                while (!nameAdded)
+                {
+                    nameAdded = true;
+                    Console.WriteLine("Enter Name");
+                    playerName = Console.ReadLine();
+                    foreach (string name in _players)
+                    {
+                        if (name == playerName)
+                        {
+                            Console.WriteLine("Name is already taken, choose another.");
+                            nameAdded = false;
+                        }
+                    }
+                }
+                //we have A UNIQUE NAME.
+                _players.Add(playerName);
+                    
+
+            }
+            else if(playerChoice == 2)
+            {
+
+            }
+            else if(playerChoice == 3)
+            {
+
+            }
+
+
+        }
+        private int PlayerMenuChoice()
+        {
+            string userInput = Console.ReadLine();
+            int playerChoice = 0;
+            int result = 0;
+            try
+            {
+                playerChoice = int.Parse(userInput);
+                if(playerChoice >=1 || playerChoice <= 3)
+                {
+                    result = playerChoice;
+                }
+
+
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine("Please enter 1, 2, or 3.  Hit any key to continue.");
+            }
+            return result;
+        }
+
+        private void DisplayPlayerMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("1.) Add Player");
+            Console.WriteLine("2.) Remove Player");
+            Console.WriteLine("3.) Back To Main Menu");
         }
 
         private void DisplayLeaderBoard()
         {
-
+            
         }
 
         private void DisplaySuicideScreen()
@@ -106,7 +208,11 @@ namespace CompileItCLI
 
                     if (_game.HasWinner)
                     {
+<<<<<<< HEAD
+=======
                         // Log winner data to file
+                        _game.SaveWinner(_game.CurrentPlayerName);
+>>>>>>> f75279db723c075fb6c74ef10a235ca027150114
                         Console.Clear();
                         Console.WriteLine("The winner is " + _game.CurrentPlayerName);
                         Console.ReadKey();
@@ -142,7 +248,7 @@ namespace CompileItCLI
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     Console.ReadKey();
@@ -216,14 +322,36 @@ namespace CompileItCLI
             ResetColor();
         }
 
+        public Dictionary<int, ConsoleColor> ColorDictionary = new Dictionary<int, ConsoleColor>()
+                {
+                    {0, ConsoleColor.Blue}
+
+                };
         private void SetColor()
         {
+            Console.ForegroundColor = ColorDictionary[0];
             //_game.CurrentPlayerName
+
         }
 
         private void ResetColor()
         {
-
+            Console.ResetColor();
         }
+    
+    
     }
-}
+
+   
+        
+
+        
+    }
+      
+    
+    
+        
+
+       
+    
+
