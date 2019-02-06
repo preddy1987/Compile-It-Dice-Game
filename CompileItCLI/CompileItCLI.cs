@@ -19,7 +19,7 @@ namespace CompileItCLI
         {
             _game = game;
 
-            Utility.PlaySound("air_raid.wav");
+            Utility.PlaySound("trumpet.wav");
 
             DisplaySplashScreen();
         }
@@ -106,6 +106,8 @@ namespace CompileItCLI
 
         public void PlayGame()
         {
+            Utility.PlaySound("pool_break.wav");
+
             _game.Start(_players);
 
             TurnMenu();
@@ -246,6 +248,7 @@ namespace CompileItCLI
 
                     if (_game.HasWinner)
                     {
+                        Utility.PlaySound("applause.wav");
                         _game.SaveWinner(_game.CurrentPlayerName);
                         Console.Clear();
                         Console.WriteLine("The winner is " + _game.CurrentPlayerName);
@@ -296,6 +299,7 @@ namespace CompileItCLI
 
             if (status.TurnErrors >= 3)
             {
+                Utility.PlaySound("whah_whah.wav");
                 Console.Clear();
                 Console.WriteLine("You busted!\n\nPress any key to continue...");
                 Console.ReadKey();
