@@ -104,7 +104,79 @@ namespace CompileItCLI
 
         public void DisplaySplashScreen()
         {
+            Random rnd = new Random();
+            List<List<char[]>> bannerData = new List<List<char[]>>();
+            ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+            string[] devlopers = new string[7]
+                {   "Team 1: Zachary Hall, Terri Ulloa",
+                    "Team 2: Patrick Reddy, Joe Knutson",
+                    "Team 3: Brain Pleshek, Mitchell Morrison",
+                    "Team 4: John Wunderle, Ben Loper",
+                    "Team 5: Mike Wolford, Garrick Kreitzer",
+                    "Team 6: Adam Smith, Josh Molczyk",
+                    "Team 7: Thomas Martinez, William Terlep"    };
 
+            string fullFileName = @"C:\workspace\compileitgame\compileitdicegame\SplashData.txt";
+
+
+            using (StreamReader sr = new StreamReader(fullFileName))
+            {
+                while (!sr.EndOfStream)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        List<char[]> foo = new List<char[]>();
+                        for (int j = 0; j < 12; j++)
+                        {
+                            char[] screenLine = new char[86];
+                            for (int k = 0; k < screenLine.Length; k++)
+                            {
+                                screenLine[k] = ' ';
+                            }
+                            screenLine = sr.ReadLine().ToCharArray();
+                            foo.Add(screenLine);
+                        }
+                        bannerData.Add(foo);
+                    }
+                    for (int loop = 0; loop < 4; loop++)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            rnd.Next(0, colors.Length);
+                            Console.BackgroundColor = colors[rnd.Next(1, colors.Length)];
+                            for (int j = 0; j < 12; j++)
+                            {
+                                Console.SetCursorPosition(10, 5 + j);
+                                char[] screenLine = new char[86];
+                                screenLine = bannerData[i][j];
+                                for (int k = 0; k < screenLine.Length; k++)
+                                {
+
+                                    Console.Write(screenLine[k]);
+                                }
+
+                            }
+                            System.Threading.Thread.Sleep(200);
+                        }
+                    }
+
+                    int l = 0;
+                    int m = 0;
+                    Console.BackgroundColor = colors[0];
+                    Console.SetCursorPosition(40, 18);
+                    Console.Write("VERSION 0.9");
+                    Console.SetCursorPosition(10, 19);
+                    Console.Write("Project lead: Chris Rupp");
+                    foreach (string team in devlopers)
+                    {
+                        Console.SetCursorPosition(21 + l, 20 + m);
+                        Console.Write(team);
+                        l += 2;
+                        m += 1;
+                    }
+                }
+            }
+            System.Threading.Thread.Sleep(2000);
         }
 
         public void PlayGame()
