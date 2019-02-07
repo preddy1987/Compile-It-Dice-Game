@@ -116,7 +116,7 @@ namespace CompileItCLI
                     "Team 6: Adam Smith, Josh Molczyk",
                     "Team 7: Thomas Martinez, William Terlep"    };
 
-            string fullFileName = @"C:\workspace\compileitgame\compileitdicegame\SplashData.txt";
+            string fullFileName = $@"{Environment.CurrentDirectory}\..\..\..\..\SplashData.txt";
 
 
             using (StreamReader sr = new StreamReader(fullFileName))
@@ -330,11 +330,36 @@ namespace CompileItCLI
 
             if (playerScores.Count == 0)
             {
-                Console.Clear();
-                Console.WriteLine("No one has played your stupid game :(");
+                Utility.PlaySound("SadTrombone.wav");
+                Console.WriteLine("\n\n         Guess what..." +
+                    " No one has played yet\n");
+
+                Console.WriteLine(@"
+            ░░░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░░
+            ░░░░░░░░░░░░▄████████████████▄░░░░░░░░░░
+            ░░░░░░░░░░▄██▀░░░░░░░▀▀████████▄░░░░░░░░
+            ░░░░░░░░░▄█▀░░░░░░░░░░░░░▀▀██████▄░░░░░░
+            ░░░░░░░░░███▄░░░░░░░░░░░░░░░▀██████░░░░░
+            ░░░░░░░░▄░░▀▀█░░░░░░░░░░░░░░░░██████░░░░
+            ░░░░░░░█▄██▀▄░░░░░▄███▄▄░░░░░░███████░░░
+            ░░░░░░▄▀▀▀██▀░░░░░▄▄▄░░▀█░░░░█████████░░
+            ░░░░░▄▀░░░░▄▀░▄░░█▄██▀▄░░░░░██████████░░
+            ░░░░░█░░░░▀░░░█░░░▀▀▀▀▀░░░░░██████████▄░
+            ░░░░░░░▄█▄░░░░░▄░░░░░░░░░░░░██████████▀░
+            ░░░░░░█▀░░░░▀▀░░░░░░░░░░░░░███▀███████░░
+            ░░░▄▄░▀░▄░░░░░░░░░░░░░░░░░░▀░░░██████░░░
+            ██████░░█▄█▀░▄░░██░░░░░░░░░░░█▄█████▀░░░
+            ██████░░░▀████▀░▀░░░░░░░░░░░▄▀█████████▄
+            ██████░░░░░░░░░░░░░░░░░░░░▀▄████████████
+            ██████░░▄░░░░░░░░░░░░░▄░░░██████████████
+            ██████░░░░░░░░░░░░░▄█▀░░▄███████████████
+            ███████▄▄░░░░░░░░░▀░░░▄▀▄███████████████");
+
             }
             else
             {
+                Utility.PlaySound("TaDa.wav");
+
                 for (int i = 0; i < playerScores.Count; i++)
                 {
                     if (playerScores[i].NumOfWins > highestScore)
@@ -356,7 +381,7 @@ namespace CompileItCLI
                                     j = leaderBoard.Count;
                                     isHigher = true;
                                 }
-                                else if(playerScores[i].NumOfWins == leaderBoard[j].NumOfWins)
+                                else if (playerScores[i].NumOfWins == leaderBoard[j].NumOfWins)
                                 {
                                     leaderBoard.Insert(j, playerScores[i]);
                                     j = leaderBoard.Count;
@@ -370,16 +395,27 @@ namespace CompileItCLI
                                 isHigher = true;
                             }
                         }
-                        
+
                     }
                 }
 
+                int rank = 1;
+                Console.WriteLine(@"
+ _                   _             ____                      _ 
+| |    ___  __ _  __| | ___ _ __  | __ )  ___   __ _ _ __ __| |
+| |   / _ \/ _` |/ _` |/ _ \ '__| |  _ \ / _ \ / _` | '__/ _` |
+| |__|  __/ (_| | (_| |  __/ |    | |_) | (_) | (_| | | | (_| |
+|_____\___|\__,_|\__,_|\___|_|    |____/ \___/ \__,_|_|  \__,_| 
+");
+                Console.WriteLine("\n Rank".PadRight(15) + "Player".PadRight(15) + "Number of wins\n");
+
                 foreach (PlayerScore player in leaderBoard)
                 {
-                    Console.WriteLine($"{player.PlayerName} : {player.NumOfWins}");
+                    Console.WriteLine($" {rank}".PadRight(15) + $"{player.PlayerName}".PadRight(15) + $"{player.NumOfWins}\n");
+                    rank++;
                 }
             }
-
+            Console.WriteLine("\n\nPress any key to return to the main menu...");
             Console.ReadKey();
         }
 
@@ -410,7 +446,7 @@ namespace CompileItCLI
                         quit = true;
                     }
                     else
-                    {                       
+                    {
                         DisplayPlayerStatus();
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine();
@@ -511,7 +547,7 @@ namespace CompileItCLI
         {
             // Add colors for different players
             SetColor();
-            
+
             // Undergo Beautification
             var status = _game.CurrentPlayerStatus;
             string header = "*";
@@ -525,8 +561,8 @@ namespace CompileItCLI
             string remainingDie = $"Remaining Dice: {status.RemainingDice.Count}";
 
             Console.WriteLine(header.PadLeft(30, '*'));
-            Console.WriteLine($"{header.PadRight(29,' ').PadLeft(26,' ')}*");
-            Console.WriteLine($"*{player.PadLeft(20, ' ').PadRight(28,' ')}*");
+            Console.WriteLine($"{header.PadRight(29, ' ').PadLeft(26, ' ')}*");
+            Console.WriteLine($"*{player.PadLeft(20, ' ').PadRight(28, ' ')}*");
             Console.WriteLine($"*{round.PadLeft(21, ' ').PadRight(28, ' ')}*");
             Console.WriteLine($"*{totalSuccesses.PadLeft(20, ' ').PadRight(28, ' ')}*");
             Console.WriteLine($"{header.PadRight(29, ' ').PadLeft(26, ' ')}*");
@@ -542,13 +578,13 @@ namespace CompileItCLI
             Console.WriteLine(header.PadLeft(30, '*'));
 
             Console.WriteLine($"{header.PadRight(29, ' ').PadLeft(26, ' ')}*");
-            
+
             // Add information about dice in cup
             Console.WriteLine($"*{odds.PadLeft(23, ' ').PadRight(28, ' ')}*");
-            
+
             //return total amount of die remaining in the cup
             Console.WriteLine($"*{remainingDie.PadLeft(21, ' ').PadRight(28, ' ')}*");
-            
+
             //color of the remaining die in the cup and quantity
             int greenCounter = 0;
             int redCounter = 0;
@@ -575,7 +611,7 @@ namespace CompileItCLI
 
             Console.Write("*");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(greenDie.PadLeft(10,' '));
+            Console.Write(greenDie.PadLeft(10, ' '));
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(yellowDie);
             Console.ForegroundColor = ConsoleColor.Red;
