@@ -116,8 +116,7 @@ namespace CompileItCLI
                     "Team 6: Adam Smith, Josh Molczyk",
                     "Team 7: Thomas Martinez, William Terlep"    };
 
-            string fullFileName = @"C:\workspace\compileitgame\compileitdicegame\SplashData.txt";
-
+            string fullFileName = $@"{Environment.CurrentDirectory}\..\..\..\..\SplashData.txt";
 
             using (StreamReader sr = new StreamReader(fullFileName))
             {
@@ -183,7 +182,12 @@ namespace CompileItCLI
         {
             Utility.PlaySound("pool_break.wav");
 
-            _game.Start(_players);
+            _game.RemoveAllPlayers();
+            foreach(var player in _players)
+            {
+                _game.AddPlayer(player);
+            }
+            _game.Start();
 
             TurnMenu();
         }

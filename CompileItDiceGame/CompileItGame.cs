@@ -10,19 +10,23 @@ namespace CompileIt
     public class CompileItGame : ICompileItGame
     {
         #region Member Variables
-        private List<CompileItPlayer> _players = null;
+
+        private List<CompileItPlayer> _players = new List<CompileItPlayer>();
         private Random _dieRoller = new Random();
 
         private int _currentPlayerIndex = 0;
         private int _startPlayerIndex = 0;
+
         #endregion
 
+
         #region Properties
+
         public string CurrentPlayerName
         {
             get
             {
-                return CurrentPlayer.Name;
+                return CurrentPlayer == null ? null : CurrentPlayer.Name;
             }
         }
 
@@ -98,7 +102,7 @@ namespace CompileIt
         {
             get
             {
-                return _players[_currentPlayerIndex];
+                return _players.Count == 0 ? null : _players[_currentPlayerIndex];
             }
         }
 
@@ -106,7 +110,7 @@ namespace CompileIt
         {
             get
             {
-                return CurrentPlayer.Odds;
+                return CurrentPlayer == null ? 0.0 : CurrentPlayer.Odds;
             }
         }
 
@@ -114,7 +118,7 @@ namespace CompileIt
         {
             get
             {
-                return CurrentPlayer;
+                return CurrentPlayer == null ? null : ObjectCopier.Clone(CurrentPlayer);
             }
         }
 
@@ -122,7 +126,7 @@ namespace CompileIt
         {
             get
             {
-                return CurrentPlayer.IsTurnOver;
+                return CurrentPlayer == null ? false : CurrentPlayer.IsTurnOver;
             }
         }
 
@@ -140,23 +144,43 @@ namespace CompileIt
                 return result;
             }
         }
+
+        public List<IPlayerName> Players
+        {
+            get
+            {
+                List<IPlayerName> result = new List<IPlayerName>();
+
+                foreach (var player in _players)
+                {
+                    result.Add(ObjectCopier.Clone(player));
+                }
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region Constructors
+
         public CompileItGame()
         {
 
         }
+
         #endregion
 
         #region Methods
-        public void Start(List<string> playerNames)
+
+        public void Start()
         {
+            if(_players.Count == 0)
+            {
+                throw new NoPlayersException();
+            }
             Random rnd = new Random();
-            _startPlayerIndex = rnd.Next(0, playerNames.Count);
-
-            SetupPlayers(playerNames);
-
+            _startPlayerIndex = rnd.Next(0, _players.Count);
             _currentPlayerIndex = _startPlayerIndex;
         }
 
@@ -267,6 +291,37 @@ namespace CompileIt
                         File.WriteAllText(fullPath, outXml);
                 }
             }
+        }
+
+        public void AddPlayer(string playerName)
+        {
+            if(playerName == null || playerName == "")
+            {
+                throw new ArgumentException("Empty player names are not acceptable.");
+            }
+            else if (_players.Exists(m => m.Name == playerName))
+            {
+                throw new PlayerAlreadyExistsException();
+            }
+            _players.Add(new CompileItPlayer(playerName));
+        }
+
+        public void RemovePlayer(string playerName)
+        {
+            int index = _players.FindIndex(m => m.Name == playerName);
+            if(index != -1)
+            {
+                _players.RemoveAt(index);
+            }
+            else
+            {
+                throw new PlayerNotFoundException();
+            }
+        }
+
+        public void RemoveAllPlayers()
+        {
+            _players.Clear();
         }
 
         #endregion
