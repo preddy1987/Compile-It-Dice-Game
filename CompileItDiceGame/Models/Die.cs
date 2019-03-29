@@ -17,6 +17,25 @@ namespace CompileIt
                 return _dieSides.Count;
             }
         }
+        public string TypeName
+        {
+            get
+            {
+                return Type.ToString();
+            }
+        }
+        public List<string> SideNames
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach (var side in _dieSides)
+                {
+                    result.Add(side.ToString());
+                }
+                return result;
+            }
+        }
 
         /// <summary>
         /// Create a die of the specified type

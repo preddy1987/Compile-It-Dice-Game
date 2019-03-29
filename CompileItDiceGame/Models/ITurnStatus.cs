@@ -4,9 +4,13 @@ using System.Text;
 
 namespace CompileIt
 {
-    public interface IPlayerStatus
+    public interface IPlayerName
     {
         string Name { get; }
+    }
+
+    public interface IPlayerStatus : IPlayerName
+    {
         int RoundCount { get; }
         int TotalSuccesses { get; }
     }

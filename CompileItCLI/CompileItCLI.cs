@@ -183,7 +183,12 @@ namespace CompileItCLI
         {
             Utility.PlaySound("pool_break.wav");
 
-            _game.Start(_players);
+            _game.RemoveAllPlayers();
+            foreach(var player in _players)
+            {
+                _game.AddPlayer(player);
+            }
+            _game.Start();
 
             TurnMenu();
         }
