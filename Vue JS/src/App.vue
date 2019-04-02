@@ -6,7 +6,7 @@
     <button>Start Game</button>
     <button>Roll</button>
     <button>Pass Turn</button>
-    <player-status />
+    <player-status :gameStatus="gameStatus" :turnStatus="turnStatus"/>
     <game-status />
   </div>
 </template>
@@ -25,7 +25,9 @@ export default {
   },
   data() {
     return {
-      diceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}]
+      diceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}],
+      gameStatus: {currentPlayer: 'Chris'},
+      turnStatus: {turnErrors: '1',turnSuccesses:'1',turnWarnings:'1',totalSuccesses:'5',round:'5'}
     }
   }
 }
