@@ -1,5 +1,6 @@
 <template>
     <div>
+        Game Status
     </div>
 </template>
 
@@ -10,5 +11,8 @@ export default {
 </script>
 
 <style scoped>
-
+div {
+    border: solid 2px black;
+    padding: 5px;
+}
 </style>

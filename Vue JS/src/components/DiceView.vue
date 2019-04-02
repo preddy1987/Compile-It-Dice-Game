@@ -79,7 +79,7 @@ export default {
 div {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 }
 img {
   width: 100%;
