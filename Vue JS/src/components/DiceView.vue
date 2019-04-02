@@ -51,7 +51,7 @@ export default {
       for(let i = 0; i < this.dice.length; i++) {
         data.push({
           id: i,
-          address: this.getImageAddress(this.dice[i].value, this.dice[i].color)
+          address: this.getImageAddress(this.dice[i].value, this.dice[i].color.toLowerCase())
         })
       }
       return data;
