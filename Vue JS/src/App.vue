@@ -1,16 +1,21 @@
 <template>
-  <div id="app">    
-    <main-view />
+  <div>    
+    <dice-view :dice="diceData" />
   </div>
 </template>
 
 <script>
-import MainView from './components/MainView.vue'
+import DiceView from './components/DiceView.vue'
 
 export default {
   name: 'App',
   components: {
-    MainView
+    DiceView
+  },
+  data() {
+    return {
+      diceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}]
+    }
   }
 }
 </script>
