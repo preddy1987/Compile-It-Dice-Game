@@ -43,10 +43,10 @@ export default {
 </script>
 
 <style scoped>
-div {
+/* div {
     border: solid 2px black;
     padding: 5px;
-}
+} */
 .current{
     font-weight:bold;
     color: seagreen;
@@ -54,19 +54,21 @@ div {
 div > h4{
     text-align: center;
     margin:auto;
+    background-color: seagreen;
+    color: white;
+    border-top: solid 2px black;
+    border-left: solid 2px black;
+    border-right: solid 2px black;
+    padding: 5px;
 }
 .game-status{
     display:grid;
     grid-template-columns: auto auto auto;
     grid-gap: 20px 20px;
+    border: solid 2px black;
+    padding: 5px;
 }
-.player{
- 
+ul :first-child{
+    font-weight: bolder;
 }
-/* .score{
-    grid-area: score;
-}
-.round{
-    grid-area: round;
-} */
 </style>
