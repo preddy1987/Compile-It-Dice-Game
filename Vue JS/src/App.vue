@@ -13,7 +13,7 @@
     <button>Roll</button>
     <button>Pass Turn</button>
     <player-status :gameStatus="gameStatus" :turnStatus="turnStatus"/>
-    <game-status :players="players" />
+    <game-status :players="players"/>
     <dice-view :dice="remainingDiceData" />
   </div>
 </template>
