@@ -43,8 +43,14 @@ namespace CompileItWebApi
             Players result = new Players();
             try
             {
-                List<string> names = new List<string>();
-                _game.Players.ForEach(m => names.Add(m.Name));
+                List<Player> names = new List<Player>();
+                _game.PlayersStatus.ForEach(m => {
+                    var player = new Player();
+                    player.Name = m.Name;
+                    player.RoundCount = m.RoundCount;
+                    player.TotalSuccesses = m.TotalSuccesses;
+                    names.Add(player);
+                });
                 result.GamePlayers = names;
             }
             catch (Exception ex)
