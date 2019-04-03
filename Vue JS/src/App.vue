@@ -1,11 +1,14 @@
 <template>
   <div>    
     <dice-view :dice="diceData" />
-    <form action="/action_page.php" @submit.prevent="addPlayerClick">
-      <input type="text" name="name" v-model="playerName" placeholder="Name">
+    <form @submit.prevent="addPlayer">
+      <input type="text" name="name" v-model="addPlayerName" placeholder="Name">
       <input type="submit" value="Add Player">
     </form>
-    <button>Remove Player</button>
+    <form @submit.prevent="removePlayer">
+      <input type="text" name="name" v-model="removePlayerName" placeholder="Name">
+      <input type="submit" value="Remove Player">
+    </form>
     <button>Start Game</button>
     <button>Roll</button>
     <button>Pass Turn</button>
@@ -33,15 +36,16 @@ export default {
       diceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}],
       gameStatus: {currentPlayer: 'Chris'},
       turnStatus: {turnErrors: '1',turnSuccesses:'1',turnWarnings:'1',totalSuccesses:'5',round:'5'},
-      playerName: "",
-      remainingDiceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}],
-      players: [{name:'Chris'},{name:'Bob'},{name:'Tina'}]
+      addPlayerName: "",
+      removePlayerName: "",
+      remainingDiceData: [],
+      players: []
     }
   },
   methods: {
-    addPlayerClick() {
+    addPlayer() {
       const player = {};
-      player.name = this.playerName;
+      player.name = this.addPlayerName;
 
       let ajaxURL = serverUrl + "api/player";
 
@@ -58,7 +62,50 @@ export default {
       })
       .then((data) => {
         window.console.log(data);
-        this.updateRemainingDice(data.turnStatus.remainingDice);         
+        this.updateRemainingDice(data.turnStatus.remainingDice);
+        this.getPlayers();         
+      })
+      .catch((error) => {
+        window.console.log('Error:', error);
+      });
+    },
+    removePlayer() {
+      let ajaxURL = `${serverUrl}api/player/${this.removePlayerName}`;
+
+      //http://localhost:50260/api/player/{name}
+      fetch(ajaxURL, {
+          method: 'delete',
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        window.console.log(data);
+        this.getPlayers();         
+      })
+      .catch((error) => {
+        window.console.log('Error:', error);
+      });
+    },
+    getPlayers() {
+      let ajaxURL = serverUrl + "api/players";
+
+      //http://localhost:50260/api/players
+      fetch(ajaxURL, {
+          method: 'get',
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        window.console.log(data);
+        this.updatePlayers(data.gamePlayers);         
       })
       .catch((error) => {
         window.console.log('Error:', error);
@@ -72,7 +119,18 @@ export default {
         this.remainingDiceData.push({value: 1, color:die.typeName})
         //{type: 3, numberOfSides: 6, typeName: "Green", sideNames: Array(6)}
       });
+    },
+    updatePlayers(players) {
+      window.console.log(players);
+      this.players = [];
+      
+      players.forEach((player) => {
+        this.players.push({name:player})
+      });
     }
+  },
+  created(){
+    this.getPlayers();
   }
 }
 </script>
