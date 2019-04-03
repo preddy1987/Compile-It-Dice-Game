@@ -35,7 +35,7 @@ export default {
     return {
       diceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}],
       gameStatus: {currentPlayer: 'Chris'},
-      turnStatus: {turnErrors: '1',turnSuccesses:'1',turnWarnings:'1',totalSuccesses:'5',round:'5'},
+      turnStatus: {turnErrors: '1',turnSuccesses:'1',turnWarnings:'1'},
       addPlayerName: "",
       removePlayerName: "",
       remainingDiceData: [],

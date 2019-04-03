@@ -1,12 +1,16 @@
 <template>
     <div class="player-status">
-        <h2>{{ gameStatus.currentPlayer }}</h2>
-        <h4>Total Successes: {{ turnStatus.totalSuccesses }}</h4>
-        <h4>Round: {{ turnStatus.round }}</h4>
-        <ul>
-            <li class="successes">Turn Successes: {{ turnStatus.turnSuccesses }}</li>
-            <li class="warnings">Turn Warnings: {{ turnStatus.turnWarnings }}</li>   
-            <li class="errors">Turn Errors: {{ turnStatus.turnErrors }}</li>              
+        <ul class="successes list-group list-group-flush">
+            <li class="list-group-item">Successes</li>
+            <li class="list-group-item">{{ turnStatus.turnSuccesses }}</li>
+        </ul>
+        <ul class="warnings list-group list-group-flush">
+            <li class="list-group-item">Warnings</li>
+            <li class="list-group-item">{{ turnStatus.turnWarnings }}</li>
+        </ul>
+        <ul class="errors list-group list-group-flush">  
+            <li class="list-group-item">Errors</li> 
+            <li class="list-group-item">{{ turnStatus.turnErrors }}</li>              
         </ul>
     </div>
 </template>
@@ -22,5 +26,15 @@ export default {
 </script>
 
 <style scoped>
+.player-status{
+    display:grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px 20px;
+    border: solid 2px black;
+    padding: 5px;
+}
+ul :first-child{
+    font-weight: bolder;
+}
 
 </style>
