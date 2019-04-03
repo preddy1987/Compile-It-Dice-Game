@@ -1,12 +1,20 @@
 <template>
-    <div class="game-status">
+    <div>
         <h4>Scoreboard</h4>
-        <ul class="player-container">
-            <li class="player" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.name}}
-                <span class="round">Round: {{player.round}}</span>
-                <span class="score">Score: {{player.score}}</span>
-            </li>
-        </ul>
+        <div class="game-status">
+            <ul class="player list-group list-group-flush">
+                <li class="list-group-item">Players</li>
+                <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.name}}</li>
+            </ul>
+            <ul class="round list-group list-group-flush">
+                <li class="list-group-item">Round</li>
+                <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.round}}</li>
+            </ul>
+            <ul class="score list-group list-group-flush">
+                <li class="list-group-item">Score</li>
+                <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.score}}</li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -43,19 +51,22 @@ div {
     font-weight:bold;
     color: seagreen;
 }
-.player-container{
+div > h4{
+    text-align: center;
+    margin:auto;
+}
+.game-status{
     display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas:
-    "player round score"
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px 20px;
 }
 .player{
-    grid-area: player;
+ 
 }
-.score{
+/* .score{
     grid-area: score;
 }
 .round{
     grid-area: round;
-}
+} */
 </style>
