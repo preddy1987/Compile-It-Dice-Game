@@ -22,13 +22,5 @@ export default {
 </script>
 
 <style scoped>
-.successes{
-    color: green;
-}
-.warnings{
-    color: yellow;
-}
-.errors{
-    color: red;
-}
+
 </style>
