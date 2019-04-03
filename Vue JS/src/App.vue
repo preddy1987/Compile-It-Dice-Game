@@ -10,7 +10,7 @@
     <button>Roll</button>
     <button>Pass Turn</button>
     <player-status :gameStatus="gameStatus" :turnStatus="turnStatus"/>
-    <game-status />
+    <game-status :players="players" />
     <dice-view :dice="remainingDiceData" />
   </div>
 </template>
@@ -34,7 +34,8 @@ export default {
       gameStatus: {currentPlayer: 'Chris'},
       turnStatus: {turnErrors: '1',turnSuccesses:'1',turnWarnings:'1',totalSuccesses:'5',round:'5'},
       playerName: "",
-      remainingDiceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}]
+      remainingDiceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}],
+      players: [{name:'Chris'},{name:'Bob'},{name:'Tina'}]
     }
   },
   methods: {

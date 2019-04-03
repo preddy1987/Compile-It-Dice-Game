@@ -4,9 +4,9 @@
         <h4>Total Successes: {{ turnStatus.totalSuccesses }}</h4>
         <h4>Round: {{ turnStatus.round }}</h4>
         <ul>
-            <li>Turn Successes: {{ turnStatus.turnSuccesses }}</li>
-            <li>Turn Warnings: {{ turnStatus.turnWarnings }}</li>   
-            <li>Turn Errors: {{ turnStatus.turnErrors }}</li>              
+            <li class="successes">Turn Successes: {{ turnStatus.turnSuccesses }}</li>
+            <li class="warnings">Turn Warnings: {{ turnStatus.turnWarnings }}</li>   
+            <li class="errors">Turn Errors: {{ turnStatus.turnErrors }}</li>              
         </ul>
     </div>
 </template>
@@ -22,5 +22,13 @@ export default {
 </script>
 
 <style scoped>
-
+.successes{
+    color: green;
+}
+.warnings{
+    color: yellow;
+}
+.errors{
+    color: red;
+}
 </style>
