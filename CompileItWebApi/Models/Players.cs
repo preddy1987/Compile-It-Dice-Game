@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CompileIt
+namespace CompileItWebApi
 {
-    public class Players : Status
+    public class Players : CompileIt.Status
     {
-        public List<string> GamePlayers { get; set; }
+        public List<Player> GamePlayers { get; set; }
     }
 }

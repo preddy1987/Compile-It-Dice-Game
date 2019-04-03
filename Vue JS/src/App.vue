@@ -105,7 +105,7 @@ export default {
       })
       .then((data) => {
         window.console.log(data);
-        this.updatePlayers(data.gamePlayers);         
+        this.updatePlayers(data.gamePlayers, data.gameStatus.currentPlayer);         
       })
       .catch((error) => {
         window.console.log('Error:', error);
@@ -120,12 +120,17 @@ export default {
         //{type: 3, numberOfSides: 6, typeName: "Green", sideNames: Array(6)}
       });
     },
-    updatePlayers(players) {
+    updatePlayers(players, currentPlayer) {
       window.console.log(players);
       this.players = [];
       
       players.forEach((player) => {
-        this.players.push({name:player})
+        this.players.push({
+          name:player.name, 
+          round:player.roundCount, 
+          current:(currentPlayer === player.name), 
+          score:player.totalSuccesses
+        })
       });
     }
   },
