@@ -7,6 +7,10 @@ namespace CompileIt
     [Serializable]
     public abstract class Die
     {
+        public const string GreenDie = "Green";
+        public const string YellowDie = "Yellow";
+        public const string RedDie = "Red";
+
         protected List<CompileType> _dieSides = new List<CompileType>();
         
         public DieType Type { get; }

@@ -16,11 +16,13 @@ namespace CompileIt
         private List<Die> _lastWarningsDie = new List<Die>();
         private Cup _cup = new Cup();
 
-        public List<Die> RemainingDice
+        public List<string> RemainingDice
         {
             get
             {
-                return _cup.RemainingDie;
+                return _cup.RemainingDie.ConvertAll<string>(die => {
+                    return die.TypeName;
+                });
             }
         }
         public int RoundCount { get; private set; }
