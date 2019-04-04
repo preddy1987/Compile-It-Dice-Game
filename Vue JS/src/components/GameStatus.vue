@@ -3,15 +3,15 @@
         <h4>Scoreboard</h4>
         <div class="game-status">
             <ul class="player list-group list-group-flush">
-                <li class="list-group-item">Players</li>
+                <span>Players</span>
                 <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.name}}</li>
             </ul>
             <ul class="round list-group list-group-flush">
-                <li class="list-group-item">Round</li>
+                <span >Round</span>
                 <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.round}}</li>
             </ul>
             <ul class="score list-group list-group-flush">
-                <li class="list-group-item">Score</li>
+                <span >Score</span>
                 <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.score}}</li>
             </ul>
         </div>
@@ -43,13 +43,14 @@ export default {
 </script>
 
 <style scoped>
-/* div {
-    border: solid 2px black;
-    padding: 5px;
-} */
 .current{
     font-weight:bold;
     color: seagreen;
+}
+div{
+    text-align: center;
+    justify-content: center;
+    margin:auto;
 }
 div > h4{
     text-align: center;
@@ -63,12 +64,15 @@ div > h4{
 }
 .game-status{
     display:grid;
+    justify-items: space-evenly;
+    align-content: space-evenly;
     grid-template-columns: auto auto auto;
-    grid-gap: 20px 20px;
+    grid-gap: 20px 60px;
     border: solid 2px black;
     padding: 5px;
 }
 ul :first-child{
     font-weight: bolder;
+    font-size: 18px;
 }
 </style>
