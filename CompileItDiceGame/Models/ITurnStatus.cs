@@ -26,6 +26,6 @@ namespace CompileIt
 
     public interface IRollStatus : ITurnStatus
     {
-        List<string> RollSides { get; }
+        List<RollInfo> RollSides { get; }
     }
 }
