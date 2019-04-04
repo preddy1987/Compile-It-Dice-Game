@@ -10,9 +10,7 @@
       <input type="submit" value="Remove Player">
     </form>
     <button>Start Game</button>
-    <button>Roll</button>
-    <button>Pass Turn</button>
-    <player-status :gameStatus="gameStatus" :turnStatus="turnStatus"/>
+    <player-status @roll="rollDice" @pass="passTurn" :turnStatus="turnStatus"/>
     <game-status :players="players"/>
     <dice-view :dice="remainingDiceData" />
   </div>
@@ -34,8 +32,7 @@ export default {
   data() {
     return {
       diceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}],
-      gameStatus: {currentPlayer: 'Chris'},
-      turnStatus: {turnErrors: '1',turnSuccesses:'1',turnWarnings:'1'},
+      turnStatus: {turnErrors: 0, turnSuccesses: 0, turnWarnings: 0},
       addPlayerName: "",
       removePlayerName: "",
       remainingDiceData: [],
@@ -132,7 +129,54 @@ export default {
           score:player.totalSuccesses
         })
       });
-    }
+    },
+    rollDice() {
+      let ajaxURL = serverUrl + "api/rolldice";
+
+      //http://localhost:50260/api/rolldice
+      fetch(ajaxURL, {
+          method: 'get',
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        window.console.log(data);
+        this.turnStatus.turnErrors = data.turnStatus.turnErrors;
+        this.turnStatus.turnSuccesses = data.turnStatus.turnSuccesses;
+        this.turnStatus.turnWarnings = data.turnStatus.turnWarnings;
+        // this.updateRemainingDice(data.turnStatus.remainingDice);
+                 
+      })
+      .catch((error) => {
+        window.console.log('Error:', error);
+      });
+    },
+    passTurn() {
+      let ajaxURL = serverUrl + "api/passturn";
+
+      //http://localhost:50260/api/passturn
+      fetch(ajaxURL, {
+          method: 'get',
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        window.console.log(data);
+        this.getPlayers();
+        this.turnStatus = {turnErrors: 0, turnSuccesses: 0, turnWarnings: 0};
+      })
+      .catch((error) => {
+        window.console.log('Error:', error);
+      });
+    }      
   },
   created(){
     this.getPlayers();

@@ -1,5 +1,7 @@
 <template>
     <div class="player-status">
+        <button @click="$emit('roll')" id="roll-button">Roll</button>
+        <button @click="$emit('pass')" id="pass-button">Pass Turn</button>
         <ul class="successes list-group list-group-flush">
             <li class="list-group-item">Successes</li>
             <li class="list-group-item">{{ turnStatus.turnSuccesses }}</li>
@@ -19,7 +21,6 @@
 export default {
     name: 'player-status',
     props: {
-        gameStatus: {},
         turnStatus: {}
     }
 }
@@ -35,6 +36,10 @@ export default {
 }
 ul :first-child{
     font-weight: bolder;
+}
+#roll-button{
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
 
 </style>
