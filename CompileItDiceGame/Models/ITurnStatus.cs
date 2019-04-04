@@ -23,4 +23,9 @@ namespace CompileIt
         double Odds { get; }
         List<string> RemainingDice { get; }
     }
+
+    public interface IRollStatus : ITurnStatus
+    {
+        List<string> RollSides { get; }
+    }
 }

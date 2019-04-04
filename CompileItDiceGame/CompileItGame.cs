@@ -218,7 +218,7 @@ namespace CompileIt
             }
         }
         
-        public ITurnStatus RollDice()
+        public IRollStatus RollDice()
         {
             CurrentPlayer.TakeRoll(_dieRoller);
             return CurrentPlayer;
@@ -323,7 +323,7 @@ namespace CompileIt
         {
             _players.Clear();
         }
-
+        
         #endregion
     }
 }

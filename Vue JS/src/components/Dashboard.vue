@@ -113,7 +113,7 @@ export default {
       this.remainingDiceData = [];
       
       dice.forEach((die) => {
-        this.remainingDiceData.push({value: 1, color:die.typeName})
+        this.remainingDiceData.push({value: 1, color:die})
         //{type: 3, numberOfSides: 6, typeName: "Green", sideNames: Array(6)}
       });
     },

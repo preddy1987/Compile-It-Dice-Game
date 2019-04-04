@@ -63,19 +63,21 @@ namespace CompileItWebApi
 
         [HttpGet]
         [Route("api/rolldice")]
-        public ActionResult<Status> RollDice()
+        public ActionResult<RollStatus> RollDice()
         {
-            Status result = null;
+            RollStatus result = new RollStatus();
             try
             {
-                _game.RollDice();
-                result = new Status();
+                var rolls = _game.RollDice();
+                result.DieSides = rolls.RollSides;                
             }
             catch (Exception ex)
             {
-                result = new Status(false, ex.Message);
+                result = new RollStatus();
+                result.Message = ex.Message;
+                result.IsSuccessful = false;
             }
-            return UpdateStatus(result);
+            return (RollStatus) UpdateStatus(result);
         }
 
         [HttpGet]
