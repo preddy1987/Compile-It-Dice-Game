@@ -6,7 +6,7 @@ using System.Text;
 namespace CompileIt
 {
     [Serializable]
-    public class CompileItPlayer : Player, ITurnStatus
+    public class CompileItPlayer : Player, IRollStatus
     {
         private const int NumberDiePerRoll = 3;
         private const int MaxErrorCount = 3;
@@ -14,13 +14,16 @@ namespace CompileIt
 
         private bool _turnOver = true;
         private List<Die> _lastWarningsDie = new List<Die>();
+        private List<string> _lastRolledDice = new List<string>();
         private Cup _cup = new Cup();
 
-        public List<Die> RemainingDice
+        public List<string> RemainingDice
         {
             get
             {
-                return _cup.RemainingDie;
+                return _cup.RemainingDie.ConvertAll<string>(die => {
+                    return die.TypeName;
+                });
             }
         }
         public int RoundCount { get; private set; }
@@ -114,6 +117,14 @@ namespace CompileIt
             }
         }
 
+        public List<string> RollSides
+        {
+            get
+            {
+                return _lastRolledDice;
+            }
+        }
+
         public CompileItPlayer(string name) : base(name)
         {
             ResetGame();
@@ -150,6 +161,7 @@ namespace CompileIt
                     pulledDice.Add(die);
                 }
                 _lastWarningsDie.Clear();
+                _lastRolledDice.Clear();
 
                 // Roll the dice
                 foreach (var die in pulledDice)
@@ -158,15 +170,18 @@ namespace CompileIt
                     if (side == CompileType.Error)
                     {
                         TurnErrors++;
+                        _lastRolledDice.Add(CompileType.Error.ToString());
                     }
                     else if (side == CompileType.Warning)
                     {
                         // Save the number of warnings rolled
                         _lastWarningsDie.Add(die);
+                        _lastRolledDice.Add(CompileType.Warning.ToString());
                     }
                     else
                     {
                         TurnSuccesses++;
+                        _lastRolledDice.Add(CompileType.Success.ToString());
                     }
                 }
 

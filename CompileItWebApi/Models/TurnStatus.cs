@@ -14,7 +14,7 @@ namespace CompileIt
         public int RoundCount { get; set; }
         public int TotalSuccesses { get; set; }
 
-        public List<Die> RemainingDice { get; set; }
+        public List<string> RemainingDice { get; set; }
 
         public TurnStatus(ITurnStatus status)
         {

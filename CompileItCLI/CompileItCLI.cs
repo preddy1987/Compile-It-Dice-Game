@@ -596,23 +596,23 @@ namespace CompileItCLI
             int yellowCounter = 0;
             foreach (var die in status.RemainingDice)
             {
-                if (die.Type == DieType.Green)
+                if (die == Die.GreenDie)
                 {
                     greenCounter += 1;
                 }
-                else if (die.Type == DieType.Red)
+                else if (die == Die.RedDie)
                 {
                     redCounter += 1;
                 }
-                else if (die.Type == DieType.Yellow)
+                else if (die == Die.YellowDie)
                 {
                     yellowCounter += 1;
                 }
             }
 
-            string greenDie = $"Green: {greenCounter} ";
-            string yellowDie = $"Yellow: {yellowCounter} ";
-            string redDie = $"Red: {redCounter}";
+            string greenDie = $"{Die.GreenDie}: {greenCounter} ";
+            string yellowDie = $"{Die.YellowDie}: {yellowCounter} ";
+            string redDie = $"{Die.RedDie}: {redCounter}";
 
             Console.Write("*");
             Console.ForegroundColor = ConsoleColor.Green;
