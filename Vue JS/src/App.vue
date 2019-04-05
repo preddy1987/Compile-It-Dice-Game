@@ -1,16 +1,18 @@
 <template>
-  <div>    
+  <div> 
     <dashboard/>
   </div>
 </template>
 
 <script>
+import LandingView from './components/LandingView.vue'
 import Dashboard from './components/Dashboard.vue'
 
 
 export default {
   name: 'App',
   components: {
+    LandingView,
     Dashboard      
   }
 }

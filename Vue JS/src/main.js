@@ -9,6 +9,7 @@ Vue.config.productionTip = false;
 export const eventHandler = new Vue();
 export const serverUrl = "http://localhost:50260/";
 
+
 new Vue({
   render: h => h(App),
 }).$mount('#app');
