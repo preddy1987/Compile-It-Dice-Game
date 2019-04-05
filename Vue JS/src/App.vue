@@ -1,17 +1,52 @@
 <template>
   <div>    
-    <dashboard/>
+    <dashboard  v-if="page === 'dashboard'"/>
+    <join-view v-on:playerAdded="updatePlayerList" v-if="page === 'join'"/>
   </div>
 </template>
 
 <script>
-import Dashboard from './components/Dashboard.vue'
-
+import Dashboard from './components/Dashboard.vue';
+import JoinView from './components/JoinView.vue';
+import {serverUrl} from '@/main.js';
 
 export default {
   name: 'App',
   components: {
-    Dashboard      
+    Dashboard,
+    JoinView
+  },
+  data() {
+    return {
+      page: 'join'
+    }
+  },
+  methods: {
+    updatePlayerList() {
+      // Get the players and bind to player view
+      this.page = 'dashboard';
+    },
+    getPlayers() {
+      let ajaxURL = serverUrl + "api/players";
+
+      //http://localhost:50260/api/players
+      fetch(ajaxURL, {
+          method: 'get',
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        window.console.log(data);
+        // this.updatePlayers(data.gamePlayers, data.gameStatus.currentPlayer);         
+      })
+      .catch((error) => {
+        window.console.log('Error:', error);
+      });
+    }
   }
 }
 </script>
