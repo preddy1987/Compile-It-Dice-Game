@@ -14,7 +14,7 @@ namespace CompileIt
 
         private bool _turnOver = true;
         private List<Die> _lastWarningsDie = new List<Die>();
-        private List<string> _lastRolledDice = new List<string>();
+        private List<RollInfo> _lastRolledDice = new List<RollInfo>();
         private Cup _cup = new Cup();
 
         public List<string> RemainingDice
@@ -117,7 +117,7 @@ namespace CompileIt
             }
         }
 
-        public List<string> RollSides
+        public List<RollInfo> RollSides
         {
             get
             {
@@ -167,21 +167,27 @@ namespace CompileIt
                 foreach (var die in pulledDice)
                 {
                     var side = die.Roll(dieRoller);
+                    RollInfo info = new RollInfo();
+                    info.DieType = die.TypeName;
+
                     if (side == CompileType.Error)
                     {
                         TurnErrors++;
-                        _lastRolledDice.Add(CompileType.Error.ToString());
+                        info.CompileType = CompileType.Error.ToString();
+                        _lastRolledDice.Add(info);
                     }
                     else if (side == CompileType.Warning)
                     {
                         // Save the number of warnings rolled
                         _lastWarningsDie.Add(die);
-                        _lastRolledDice.Add(CompileType.Warning.ToString());
+                        info.CompileType = CompileType.Warning.ToString();
+                        _lastRolledDice.Add(info);
                     }
                     else
                     {
                         TurnSuccesses++;
-                        _lastRolledDice.Add(CompileType.Success.ToString());
+                        info.CompileType = CompileType.Success.ToString();
+                        _lastRolledDice.Add(info);
                     }
                 }
 

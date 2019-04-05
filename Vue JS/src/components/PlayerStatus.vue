@@ -1,7 +1,7 @@
 <template>
     <div class="player-status">
-        <button @click="$emit('roll')" id="roll-button">Roll</button>
-        <button @click="$emit('pass')" id="pass-button">Pass Turn</button>
+        <button class="btn btn-primary" @click="$emit('roll')" id="roll-button">Roll Dice</button>
+        <button class="btn btn-warning" @click="$emit('pass')" id="pass-button">Pass Turn</button>
         <ul class="successes list-group list-group-flush">
             <span>Successes</span>
             <li class="list-group-item">{{ turnStatus.turnSuccesses }}</li>
