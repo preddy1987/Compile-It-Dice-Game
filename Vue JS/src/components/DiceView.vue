@@ -1,5 +1,5 @@
 <template>
-  <div>    
+  <div id="dice-view">    
     <span v-for="die in diceData" :key="die.id">
         <img :src="die.address">
     </span>
@@ -19,28 +19,28 @@ export default {
       // The code will be dynamically creating the file names
       dieImages: {
         green: [
-          require('../assets/dieGreen1.svg'),
-          require('../assets/dieGreen2.svg'),
-          require('../assets/dieGreen3.svg'),
-          require('../assets/dieGreen4.svg'),
-          require('../assets/dieGreen5.svg'),
-          require('../assets/dieGreen6.svg')
+          require('../assets/dieGreenSuccess.svg'),
+          require('../assets/dieGreenWarning.svg'),
+          require('../assets/dieGreenError.svg')
+          // require('../assets/dieGreen4.svg'),
+          // require('../assets/dieGreen5.svg'),
+          // require('../assets/dieGreen6.svg')
         ],
         red: [
-          require('../assets/dieRed1.svg'),
-          require('../assets/dieRed2.svg'),
-          require('../assets/dieRed3.svg'),
-          require('../assets/dieRed4.svg'),
-          require('../assets/dieRed5.svg'),
-          require('../assets/dieRed6.svg')
+          require('../assets/dieRedSuccess.svg'),
+          require('../assets/dieRedWarning.svg'),
+          require('../assets/dieRedError.svg'),
+          // require('../assets/dieRed4.svg'),
+          // require('../assets/dieRed5.svg'),
+          // require('../assets/dieRed6.svg')
         ],
         yellow: [
-          require('../assets/dieYellow1.svg'),
-          require('../assets/dieYellow2.svg'),
-          require('../assets/dieYellow3.svg'),
-          require('../assets/dieYellow4.svg'),
-          require('../assets/dieYellow5.svg'),
-          require('../assets/dieYellow6.svg')
+          require('../assets/dieYellowSuccess.svg'),
+          require('../assets/dieYellowWarning.svg'),
+          require('../assets/dieYellowError.svg'),
+          // require('../assets/dieYellow4.svg'),
+          // require('../assets/dieYellow5.svg'),
+          // require('../assets/dieYellow6.svg')
         ]
       }
     }    
@@ -51,23 +51,48 @@ export default {
       for(let i = 0; i < this.dice.length; i++) {
         data.push({
           id: i,
-          address: this.getImageAddress(this.dice[i].value, this.dice[i].color.toLowerCase())
+          address: this.getImageAddress(this.dice[i].compileType.toLowerCase(), this.dice[i].dieType.toLowerCase())
         })
       }
       return data;
     }
   },
   methods: {
-    getImageAddress(value, color) {
+    getImageAddress(compileType, dieType) {
       let result = '';
-      if(color === 'green'){
-        result = this.dieImages.green[value-1];
+      if(dieType === 'green'){
+        if(compileType === 'success'){
+          result = this.dieImages.green[0];
+        }
+        else if(compileType === 'warning'){
+          result = this.dieImages.green[1];
+        }
+        else if(compileType === 'error'){
+          result = this.dieImages.green[2];
+        }
       }
-      else if(color === 'red'){
-        result = this.dieImages.red[value-1];
+      else if(dieType === 'red'){
+        if(compileType === 'success'){
+          result = this.dieImages.red[0];
+        }
+        else if(compileType === 'warning'){
+          result = this.dieImages.red[1];
+        }
+        else if(compileType === 'error'){
+          result = this.dieImages.red[2];
+        }
       }
-      else if(color === 'yellow'){
-        result = this.dieImages.yellow[value-1];
+      else if(dieType === 'yellow'){
+      //   result = this.dieImages.yellow[value-1];
+        if(compileType === 'success'){
+          result = this.dieImages.yellow[0];
+        }
+        else if(compileType === 'warning'){
+          result = this.dieImages.yellow[1];
+        }
+        else if(compileType === 'error'){
+          result = this.dieImages.yellow[2];
+        }
       }
       return result;
     }

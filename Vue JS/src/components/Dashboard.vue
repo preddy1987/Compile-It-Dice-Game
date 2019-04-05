@@ -1,5 +1,5 @@
 <template>
-  <div>    
+  <div id="dashboard">    
     <dice-view :dice="diceData" />
     <form @submit.prevent="addPlayer">
       <input type="text" name="name" v-model="addPlayerName" placeholder="Name">
@@ -9,7 +9,7 @@
       <input type="text" name="name" v-model="removePlayerName" placeholder="Name">
       <input type="submit" value="Remove Player">
     </form>
-    <button @click="startGame">Start Game</button>
+    <button class="btn btn-secondary" @click="startGame">Start Game</button>
     <player-status @roll="rollDice" @pass="passTurn" :turnStatus="turnStatus"/>
     <game-status :players="players"/>
     <dice-view :dice="remainingDiceData" />
@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      diceData: [{value:'1', color:'red'},{value:'2', color:'green'},{value:'3', color:'yellow'}],
+      diceData: [{compileType:'Success', dieType:'green'},{compileType:'Warning', dieType:'yellow'},{compileType:'Error', dieType:'red'}],
       turnStatus: {turnErrors: 0, turnSuccesses: 0, turnWarnings: 0},
       addPlayerName: "",
       removePlayerName: "",
@@ -113,7 +113,16 @@ export default {
       this.remainingDiceData = [];
       
       dice.forEach((die) => {
-        this.remainingDiceData.push({value: 1, color:die})
+          if(die === 'Green'){
+              this.remainingDiceData.push({compileType: 'Success', dieType: 'Green'})
+          }
+          else if(die === 'Yellow'){
+              this.remainingDiceData.push({compileType: 'Warning', dieType: 'Yellow'})
+          }
+          else if(die === 'Red'){
+              this.remainingDiceData.push({compileType: 'Error', dieType: 'Red'})
+          }
+        // this.remainingDiceData.push({value: 1, color:die})
         //{type: 3, numberOfSides: 6, typeName: "Green", sideNames: Array(6)}
       });
     },
@@ -148,8 +157,8 @@ export default {
         this.turnStatus.turnErrors = data.turnStatus.turnErrors;
         this.turnStatus.turnSuccesses = data.turnStatus.turnSuccesses;
         this.turnStatus.turnWarnings = data.turnStatus.turnWarnings;
-        // this.updateRemainingDice(data.turnStatus.remainingDice);
-                 
+        this.updateRemainingDice(data.turnStatus.remainingDice);
+        this.diceData = data.dieSides;         
       })
       .catch((error) => {
         window.console.log('Error:', error);
@@ -172,6 +181,7 @@ export default {
         window.console.log(data);
         this.getPlayers();
         this.turnStatus = {turnErrors: 0, turnSuccesses: 0, turnWarnings: 0};
+        this.updateRemainingDice(data.turnStatus.remainingDice);
       })
       .catch((error) => {
         window.console.log('Error:', error);
@@ -205,12 +215,5 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
