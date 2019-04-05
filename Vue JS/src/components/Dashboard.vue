@@ -18,9 +18,11 @@
 
 <script>
 import {serverUrl} from '@/main.js';
+
 import DiceView from './DiceView.vue'
 import PlayerStatus from './PlayerStatus.vue'
 import GameStatus from './GameStatus.vue'
+
 
 export default {
   name: 'Dashboard',
@@ -208,6 +210,7 @@ export default {
       });
     }            
   },
+ 
   created(){
     this.getPlayers();
   }

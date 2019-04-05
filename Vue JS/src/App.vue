@@ -1,7 +1,12 @@
 <template>
+<<<<<<< HEAD
   <div>    
     <dashboard  v-if="page === 'dashboard'"/>
     <join-view v-on:playerAdded="updatePlayerList" v-if="page === 'join'"/>
+=======
+  <div> 
+    <dashboard/>
+>>>>>>> 5e1c3e729b56b1bfd9f5878beac65bb2c4914a5d
   </div>
 </template>
 
@@ -9,12 +14,15 @@
 import Dashboard from './components/Dashboard.vue';
 import JoinView from './components/JoinView.vue';
 import {serverUrl} from '@/main.js';
+import LandingView from './components/LandingView.vue'
+
 
 export default {
   name: 'App',
   components: {
     Dashboard,
-    JoinView
+    JoinView,
+    LandingView
   },
   data() {
     return {
