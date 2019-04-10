@@ -1,7 +1,8 @@
 <template>
     <div class="player-status">
-        <button class="btn btn-primary" @click="$emit('roll')" id="roll-button">Roll Dice</button>
-        <button class="btn btn-warning" @click="$emit('pass')" id="pass-button">Pass Turn</button>
+        <button v-if="isActivePlayersTurn" class="btn btn-primary" @click="$emit('roll')" id="roll-button">Roll Dice</button>
+        <button v-if="isActivePlayersTurn" class="btn btn-warning" @click="$emit('pass')" id="pass-button">Pass Turn</button>
+        <button class="btn btn-secondary" @click="$emit('removePlayer')" id="quit-button">Quit</button>
         <ul class="successes list-group list-group-flush">
             <span>Successes</span>
             <li class="list-group-item">{{ turnStatus.turnSuccesses }}</li>
@@ -21,7 +22,8 @@
 export default {
     name: 'player-status',
     props: {
-        turnStatus: {}
+        turnStatus: {},
+        isActivePlayersTurn: Boolean
     }
 }
 </script>

@@ -1,58 +1,11 @@
 <template>
-  <div>    
-    <dashboard  v-if="page === 'dashboard'"/>
-    <join-view v-on:playerAdded="updatePlayerList" v-if="page === 'join'"/>
+  <div>
+    <router-link to="/">Home</router-link> | 
+    <router-link to="/join">Join</router-link> | 
+    <router-link to="/dashboard">Dashboard</router-link>
+    <router-view />
   </div>
 </template>
-
-<script>
-import Dashboard from './components/Dashboard.vue';
-import JoinView from './components/JoinView.vue';
-import {serverUrl} from '@/main.js';
-import LandingView from './components/LandingView.vue'
-
-
-export default {
-  name: 'App',
-  components: {
-    Dashboard,
-    JoinView,
-    LandingView
-  },
-  data() {
-    return {
-      page: 'join'
-    }
-  },
-  methods: {
-    updatePlayerList() {
-      // Get the players and bind to player view
-      this.page = 'dashboard';
-    },
-    getPlayers() {
-      let ajaxURL = serverUrl + "api/players";
-
-      //http://localhost:50260/api/players
-      fetch(ajaxURL, {
-          method: 'get',
-          headers: {
-              "Content-Type": "application/json"
-          }
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        window.console.log(data);
-        // this.updatePlayers(data.gamePlayers, data.gameStatus.currentPlayer);         
-      })
-      .catch((error) => {
-        window.console.log('Error:', error);
-      });
-    }
-  }
-}
-</script>
 
 <style scoped>
 #app {

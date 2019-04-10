@@ -22,25 +22,16 @@ export default {
           require('../assets/dieGreenSuccess.svg'),
           require('../assets/dieGreenWarning.svg'),
           require('../assets/dieGreenError.svg')
-          // require('../assets/dieGreen4.svg'),
-          // require('../assets/dieGreen5.svg'),
-          // require('../assets/dieGreen6.svg')
         ],
         red: [
           require('../assets/dieRedSuccess.svg'),
           require('../assets/dieRedWarning.svg'),
-          require('../assets/dieRedError.svg'),
-          // require('../assets/dieRed4.svg'),
-          // require('../assets/dieRed5.svg'),
-          // require('../assets/dieRed6.svg')
+          require('../assets/dieRedError.svg')
         ],
         yellow: [
           require('../assets/dieYellowSuccess.svg'),
           require('../assets/dieYellowWarning.svg'),
-          require('../assets/dieYellowError.svg'),
-          // require('../assets/dieYellow4.svg'),
-          // require('../assets/dieYellow5.svg'),
-          // require('../assets/dieYellow6.svg')
+          require('../assets/dieYellowError.svg')
         ]
       }
     }    
