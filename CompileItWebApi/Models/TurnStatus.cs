@@ -13,8 +13,10 @@ namespace CompileIt
         public string Odds { get; set; }
         public int RoundCount { get; set; }
         public int TotalSuccesses { get; set; }
-
-        public List<string> RemainingDice { get; set; }
+        public List<RollInfo> DieSides { get; set; } = new List<RollInfo>();
+        public List<RollInfo> RemainingDice { get; set; }
+        public List<RollInfo> ErrorSides { get; set; } = new List<RollInfo>();
+        public List<RollInfo> SuccessSides { get; set; } = new List<RollInfo>();
 
         public TurnStatus(ITurnStatus status)
         {
@@ -24,6 +26,9 @@ namespace CompileIt
             Odds = status.Odds.ToString("N2");
             RoundCount = status.RoundCount;
             TotalSuccesses = status.TotalSuccesses;
+            ErrorSides = status.ErrorSides;
+            SuccessSides = status.SuccessSides;
+            DieSides = status.RollSides;
 
             RemainingDice = status.RemainingDice;
         }

@@ -63,21 +63,19 @@ namespace CompileItWebApi
 
         [HttpGet]
         [Route("api/rolldice")]
-        public ActionResult<RollStatus> RollDice()
+        public ActionResult<Status> RollDice()
         {
-            RollStatus result = new RollStatus();
+            Status result = new Status();
             try
             {
-                var rolls = _game.RollDice();
-                result.DieSides = rolls.RollSides;                
+                _game.RollDice();           
             }
             catch (Exception ex)
             {
-                result = new RollStatus();
                 result.Message = ex.Message;
                 result.IsSuccessful = false;
             }
-            return (RollStatus) UpdateStatus(result);
+            return (Status) UpdateStatus(result);
         }
 
         [HttpGet]
@@ -158,17 +156,25 @@ namespace CompileItWebApi
 
         private Status UpdateStatus(Status status)
         {
-            if (_game.CurrentPlayerStatus != null)
+            try
             {
-                status.TurnStatus = new TurnStatus(_game.CurrentPlayerStatus);
-                status.GameStatus.CurrentPlayer = _game.CurrentPlayerName;
-                status.GameStatus.HasWinner = _game.HasWinner;
-                status.GameStatus.IsLastRound = _game.IsLastRound;
-                status.GameStatus.IsTurnOver = _game.IsTurnOver;
+                if (_game.CurrentPlayerStatus != null)
+                {
+                    status.TurnStatus = new TurnStatus(_game.CurrentPlayerStatus);
+                    status.GameStatus.CurrentPlayer = _game.CurrentPlayerName;
+                    status.GameStatus.HasWinner = _game.HasWinner;
+                    status.GameStatus.IsLastRound = _game.IsLastRound;
+                    status.GameStatus.IsTurnOver = _game.IsTurnOver;
+                    status.GameStatus.IsGameActive = _game.IsGameActive;
+                }
+                else
+                {
+                    status.Message = "The game does not have any players yet.";
+                }
             }
-            else
+            catch(Exception ex)
             {
-                status.Message = "The game does not have any players yet.";
+                var bob = ex.Message;
             }
 
             return status;

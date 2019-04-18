@@ -596,15 +596,15 @@ namespace CompileItCLI
             int yellowCounter = 0;
             foreach (var die in status.RemainingDice)
             {
-                if (die == Die.GreenDie)
+                if (die.DieType == Die.GreenDie)
                 {
                     greenCounter += 1;
                 }
-                else if (die == Die.RedDie)
+                else if (die.DieType == Die.RedDie)
                 {
                     redCounter += 1;
                 }
-                else if (die == Die.YellowDie)
+                else if (die.DieType == Die.YellowDie)
                 {
                     yellowCounter += 1;
                 }

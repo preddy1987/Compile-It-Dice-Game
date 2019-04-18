@@ -13,7 +13,8 @@
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7",
     "vue": "^2.6.6",
-    "vue-router": "^3.0.3"
+    "vue-router": "^3.0.3",
+    "vue-rss-feed": "^0.2.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",

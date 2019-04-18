@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:50260';
+const API_URL = 'http://192.168.51.44:50260';
 
 export class APIService{
     constructor(){
@@ -39,6 +39,11 @@ export class APIService{
 
     startGame() {
         const url = `${API_URL}/api/start`;
+        return axios.get(url).then(response => response.data);
+    }
+
+    getStatus() {
+        const url = `${API_URL}/api/status`;
         return axios.get(url).then(response => response.data);
     }
 }

@@ -1,78 +1,52 @@
 <template>
+  <div id="game-status">
     <div>
-        <h4>Scoreboard</h4>
-        <div class="game-status">
-            <ul class="player list-group list-group-flush">
-                <span>Players</span>
-                <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.name}}</li>
-            </ul>
-            <ul class="round list-group list-group-flush">
-                <span >Round</span>
-                <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.round}}</li>
-            </ul>
-            <ul class="score list-group list-group-flush">
-                <span >Score</span>
-                <li class="list-group-item" v-for="player in playersList" :key="player.id" :class="{ current: player.current }">{{player.score}}</li>
-            </ul>
-        </div>
+      <div>Name</div>
+      <div>Round</div>
+      <div>Score</div>
+      <div>Place</div>
     </div>
+    <div v-for="player in players" :key="player.name">
+      <div :class="(player.current === true ? 'current-player':'')">{{player.name}}</div>
+      <div :class="(player.current === true ? 'current-player':'')">{{player.round}}</div>
+      <div :class="(player.current === true ? 'current-player':'')">{{player.score}}</div>
+      <div :class="(player.current === true ? 'current-player':'')">{{player.place}}</div> 
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    name:'game-status',
-    props: {
-        players: Array,
-    },
-    computed: {
-        playersList() {
-            let people = [];
-            for(let i = 0; i < this.players.length; i++){                
-                    people.push({
-                        id: i,
-                        name: this.players[i].name,
-                        current: this.players[i].current,
-                        score: this.players[i].score,
-                        round: this.players[i].round            
-                    })
-            }
-            return people;
-        }
-    }
-}
+  name: "game-status",
+  props: {
+    players: Array
+  }
+};
 </script>
 
 <style scoped>
-.current{
-    font-weight:bold;
-    color: seagreen;
+#game-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: lightgoldenrodyellow;
 }
-div{
-    text-align: center;
-    justify-content: center;
-    margin:auto;
+
+#game-status .current-player {
+  color: darkorchid; 
 }
-div > h4{
-    text-align: center;
-    margin:auto;
-    background-color: seagreen;
-    color: white;
-    border-top: solid 2px black;
-    border-left: solid 2px black;
-    border-right: solid 2px black;
-    padding: 5px;
+
+#game-status > div div {
+  font-weight: 500;
+  font-size: 20px;
 }
-.game-status{
-    display:grid;
-    justify-items: space-evenly;
-    align-content: space-evenly;
-    grid-template-columns: auto auto auto;
-    grid-gap: 20px 60px;
-    border: solid 2px black;
-    padding: 5px;
-}
-ul :first-child{
-    font-weight: bolder;
-    font-size: 18px;
+
+#game-status div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
 }
 </style>

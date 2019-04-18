@@ -21,11 +21,9 @@ namespace CompileIt
         int TurnSuccesses { get; }
         int TurnWarnings { get; }
         double Odds { get; }
-        List<string> RemainingDice { get; }
-    }
-
-    public interface IRollStatus : ITurnStatus
-    {
+        List<RollInfo> RemainingDice { get; }
+        List<RollInfo> SuccessSides { get; }
+        List<RollInfo> ErrorSides { get; }
         List<RollInfo> RollSides { get; }
     }
 }

@@ -1,17 +1,22 @@
 <template>
-  <div id="dice-view">    
-    <span v-for="die in diceData" :key="die.id">
-        <img :src="die.address">
-    </span>
+  <div>
+    <div class="dieTitle">{{title}}</div>
+    <div id="dice-view">
+      <span v-for="die in diceData" :key="die.id">
+          <img :src="die.address" :style="diceStyle">
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'DiceView',
+  name: 'dice-view',
   props: {
     // [{value:'1', color:'red'},{value:'1', color:'red'},{value:'1', color:'red'}], value options are 1-6 and color options are green, yellow, and red
-    dice: Array
+    dice: Array,
+    size: String,
+    title: String
   },
   data() {
     return {
@@ -46,6 +51,9 @@ export default {
         })
       }
       return data;
+    },
+    diceStyle(vm) {
+      return `width: ${vm.size}`
     }
   },
   methods: {
@@ -87,21 +95,31 @@ export default {
       }
       return result;
     }
+  },
+  beforeCreate() {
+    this.size = '80%';
   }
 }
 </script>
 
 <style scoped>
-div {
+#dice-view {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
 }
-img {
-  width: 80%;
+#dice-view img {
   height: auto;
+  widows: auto;
 }
-span {
+#dice-view span {
+  width: 45px;  
   margin: 5px;
+}
+.dieTitle {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>

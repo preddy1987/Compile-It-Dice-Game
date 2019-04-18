@@ -6,7 +6,7 @@ using System.Text;
 namespace CompileIt
 {
     [Serializable]
-    public class CompileItPlayer : Player, IRollStatus
+    public class CompileItPlayer : Player, ITurnStatus
     {
         private const int NumberDiePerRoll = 3;
         private const int MaxErrorCount = 3;
@@ -15,14 +15,19 @@ namespace CompileIt
         private bool _turnOver = true;
         private List<Die> _lastWarningsDie = new List<Die>();
         private List<RollInfo> _lastRolledDice = new List<RollInfo>();
+        private List<RollInfo> _errorDice = new List<RollInfo>();
+        private List<RollInfo> _successDice = new List<RollInfo>();
         private Cup _cup = new Cup();
 
-        public List<string> RemainingDice
+        public List<RollInfo> RemainingDice
         {
             get
             {
-                return _cup.RemainingDie.ConvertAll<string>(die => {
-                    return die.TypeName;
+                return _cup.RemainingDie.ConvertAll<RollInfo>(die => {
+                    var info = new RollInfo();
+                    info.CompileType = CompileType.Success.ToString();
+                    info.DieType = die.TypeName;
+                    return info;
                 });
             }
         }
@@ -125,6 +130,22 @@ namespace CompileIt
             }
         }
 
+        public List<RollInfo> SuccessSides
+        {
+            get
+            {
+                return _successDice;
+            }
+        }
+
+        public List<RollInfo> ErrorSides
+        {
+            get
+            {
+                return _errorDice;
+            }
+        }
+
         public CompileItPlayer(string name) : base(name)
         {
             ResetGame();
@@ -144,6 +165,8 @@ namespace CompileIt
             _cup.Reset();
             _lastWarningsDie.Clear();
             _turnOver = false;
+            _errorDice.Clear();
+            _successDice.Clear();
         }
 
         public void TakeRoll(Random dieRoller)
@@ -175,6 +198,7 @@ namespace CompileIt
                         TurnErrors++;
                         info.CompileType = CompileType.Error.ToString();
                         _lastRolledDice.Add(info);
+                        _errorDice.Add(info);
                     }
                     else if (side == CompileType.Warning)
                     {
@@ -188,6 +212,7 @@ namespace CompileIt
                         TurnSuccesses++;
                         info.CompileType = CompileType.Success.ToString();
                         _lastRolledDice.Add(info);
+                        _successDice.Add(info);
                     }
                 }
 

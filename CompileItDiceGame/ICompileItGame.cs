@@ -13,10 +13,11 @@ namespace CompileIt
         List<IPlayerStatus> PlayersStatus { get; }
         List<IPlayerName> Players { get; }
         bool IsTurnOver { get; }
+        bool IsGameActive { get; }
         string CurrentPlayerName { get; }
 
         void Start();
-        IRollStatus RollDice();
+        ITurnStatus RollDice();
         string PassTurn();
         void SaveWinner(string playerName);
         void AddPlayer(string playerName);

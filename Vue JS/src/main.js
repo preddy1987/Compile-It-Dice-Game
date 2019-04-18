@@ -7,11 +7,22 @@ import router from "./router";
 
 Vue.config.productionTip = false;
 
-export const eventHandler = new Vue();
+// export const eventHandler = new Vue();
+
 export const globals = new Vue({
   data: {
     playerName: '',
-    gameStarted: false
+    isGameActive: false,
+    players: [],
+    timer: null,
+    currentPlayer: '',
+    isLastRound: false,
+    isTurnOver: false,
+    hasWinner: false,
+    successDiceData: [],
+    errorDiceData: [],
+    remainingDiceData: [],
+    rollDiceData: []
   }
 });
 

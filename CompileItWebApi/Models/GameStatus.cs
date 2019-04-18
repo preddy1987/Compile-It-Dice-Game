@@ -10,6 +10,7 @@ namespace CompileIt
         public bool IsLastRound { get; set; }
         public bool HasWinner { get; set; }
         public string CurrentPlayer { get; set; }
-        public bool IsTurnOver { get; set; }        
+        public bool IsTurnOver { get; set; }      
+        public bool IsGameActive { get; set; }
     }
 }

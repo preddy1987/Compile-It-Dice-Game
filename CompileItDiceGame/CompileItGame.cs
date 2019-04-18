@@ -16,6 +16,7 @@ namespace CompileIt
 
         private int _currentPlayerIndex = 0;
         private int _startPlayerIndex = 0;
+        private bool _isGameActive = false;
 
         #endregion
 
@@ -179,9 +180,16 @@ namespace CompileIt
             {
                 throw new NoPlayersException();
             }
+
+            foreach(var player in _players)
+            {
+                player.ResetGame();
+            }
+
             Random rnd = new Random();
             _startPlayerIndex = rnd.Next(0, _players.Count);
             _currentPlayerIndex = _startPlayerIndex;
+            _isGameActive = true;
         }
 
         private void SetupPlayers(List<string> playerNames)
@@ -218,7 +226,7 @@ namespace CompileIt
             }
         }
         
-        public IRollStatus RollDice()
+        public ITurnStatus RollDice()
         {
             CurrentPlayer.TakeRoll(_dieRoller);
             return CurrentPlayer;
@@ -317,11 +325,25 @@ namespace CompileIt
             {
                 throw new PlayerNotFoundException();
             }
+
+            if(_players.Count == 0)
+            {
+                _isGameActive = false;
+            }
         }
 
         public void RemoveAllPlayers()
         {
             _players.Clear();
+            _isGameActive = false;
+        }
+
+        public bool IsGameActive
+        {
+            get
+            {
+                return _isGameActive && _players.Count > 0 && !HasWinner;
+            }
         }
         
         #endregion
